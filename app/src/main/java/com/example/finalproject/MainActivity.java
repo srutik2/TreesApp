@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        //This section displays a message when you switch tabs at the bottom. Mostly for testing
+        //might be helpful in the future idk, can delete safely if not.
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
@@ -39,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
                 } else if(destination.getId() == R.id.navigation_targets) {
                 Toast.makeText(getApplicationContext(), "targets", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "umm", Toast.LENGTH_SHORT).show();
                 }
             }
         });
