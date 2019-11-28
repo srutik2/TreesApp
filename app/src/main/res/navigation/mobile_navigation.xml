@@ -12,14 +12,15 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_targets"
+        android:name="com.example.finalproject.ui.targets.TargetsFragment"
+        android:label="@string/title_targets"
+        tools:layout="@layout/fragment_targets" />
+
+    <fragment
         android:id="@+id/navigation_map"
         android:name="com.example.finalproject.ui.map.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
 
-    <fragment
-        android:id="@+id/navigation_targets"
-        android:name="com.example.finalproject.ui.targets.TargetsFragment"
-        android:label="@string/title_targets"
-        tools:layout="@layout/fragment_targets" />
 </navigation>
