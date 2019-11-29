@@ -19,6 +19,7 @@ import com.example.finalproject.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class TargetsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -56,6 +57,7 @@ public class TargetsFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     private void setUpTargets() {
+
         targets.add("Please Select an Option");
         targets.add("Option1");
         targets.add("Option2");
