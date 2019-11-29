@@ -3,7 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
     <string name="title_targets">Targets</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="target_location_desc">Where to find this target:</string>
+    <string name="target_desc">Target Description:</string>
+    <string name="example_target_name">Name of the target</string>
+    <string name="example_target_location_description">On the Southwest corner of Street one and Street two, next to that one landmark that is nearby</string>
+    <string name="example_target_description">Fairly complete description of this target, which should give some interesting information about the target\'s history and importance.</string>
 </resources>

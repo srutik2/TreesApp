@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if(destination.getId() == R.id.navigation_home) {
-                    Toast.makeText(getApplicationContext(), "home", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "home", Toast.LENGTH_SHORT).show();
                 } else if(destination.getId() == R.id.navigation_map) {
-                    Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
                 } else if(destination.getId() == R.id.navigation_targets) {
-                Toast.makeText(getApplicationContext(), "targets", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "targets", Toast.LENGTH_SHORT).show();
                 }
             }
         });
