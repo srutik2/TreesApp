@@ -12,8 +12,8 @@
         android:title="@string/title_map" />
 
     <item
-        android:id="@+id/navigation_targets"
+        android:id="@+id/navigation_info"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_targets" />
+        android:title="@string/title_info" />
 
 </menu>

@@ -2,10 +2,12 @@
     <string name="app_name">Final Project</string>
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
-    <string name="title_targets">Targets</string>
+    <string name="title_info">Information</string>
     <string name="target_location_desc">Where to find this target:</string>
     <string name="target_desc">Target Description:</string>
     <string name="example_target_name">Name of the target</string>
     <string name="example_target_location_description">On the Southwest corner of Street one and Street two, next to that one landmark that is nearby</string>
     <string name="example_target_description">Fairly complete description of this target, which should give some interesting information about the target\'s history and importance.</string>
+    <string name="target_page_welcome">Welcome to the Info Panel!\n\nThis is where you will find information on\nTargets and Items in the game.</string>
+    <string name="target_page_slider_instructions">To start, move the slider to a new page.</string>
 </resources>

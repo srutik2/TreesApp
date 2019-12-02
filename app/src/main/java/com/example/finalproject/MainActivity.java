@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_map, R.id.navigation_targets).build();
+                R.id.navigation_home, R.id.navigation_map, R.id.navigation_info).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(), "home", Toast.LENGTH_SHORT).show();
                 } else if(destination.getId() == R.id.navigation_map) {
                     //Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
-                } else if(destination.getId() == R.id.navigation_targets) {
-                    //Toast.makeText(getApplicationContext(), "targets", Toast.LENGTH_SHORT).show();
+                } else if(destination.getId() == R.id.navigation_info) {
+                    //Toast.makeText(getApplicationContext(), "info", Toast.LENGTH_SHORT).show();
                 }
             }
         });

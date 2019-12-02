@@ -1,4 +1,6 @@
-package com.example.finalproject.ui.targets;
+package com.example.finalproject.ui.info;
+
+import java.util.List;
 
 class Target {
 
@@ -8,10 +10,19 @@ class Target {
 
     private String description;
 
-    public Target(final String setName, final String setLocationDescription, final String setDescription) {
+    Target(final String setName, final String setLocationDescription, final String setDescription) {
         name = setName;
         locationDescription = setLocationDescription;
         description = setDescription;
+    }
+
+    Target(final List allInfo) {
+        if (allInfo == null) {
+            return;
+        }
+        if (allInfo.get(0) != null) name = allInfo.get(0).toString();
+        if (allInfo.get(1) != null) locationDescription = allInfo.get(1).toString();
+        if (allInfo.get(2) != null) description = allInfo.get(2).toString();
     }
 
     String getName() {

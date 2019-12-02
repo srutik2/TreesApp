@@ -1,4 +1,4 @@
-package com.example.finalproject.ui.targets;
+package com.example.finalproject.ui.info;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,13 +26,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class TargetsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class InfoFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    private TargetsViewModel targetsViewModel;
+    private List<Target> targets = new ArrayList<>();
 
-    private List<List<String>> targets = new ArrayList<>();
-
-    private List<String> targetNames = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     private int selectedOption = 0;
 
@@ -42,33 +40,31 @@ public class TargetsFragment extends Fragment implements AdapterView.OnItemSelec
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        root = inflater.inflate(R.layout.fragment_targets, container, false);
-        Spinner targetList = root.findViewById(R.id.targetOptions);
-        targetList.setOnItemSelectedListener(this);
+        root = inflater.inflate(R.layout.fragment_info, container, false);
+
+        Spinner targetSelector = root.findViewById(R.id.targetOptions);
+        targetSelector.setOnItemSelectedListener(this);
+        //I/System.out: androidx.appcompat.widget.AppCompatTextView{d7e1669 V.ED..... ........ 0,4-882,80 #1020014 android:id/text1}
+
+        Spinner itemSelector = root.findViewById(R.id.itemOptions);
+        itemSelector.setOnItemSelectedListener(this);
 
         setUpTargets();
-        ArrayAdapter<String> listFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
-                android.R.layout.simple_spinner_item, targetNames);
-        listFiller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        targetList.setAdapter(listFiller);
-        targetList.setPrompt("Please Select an Option:");
-        targetList.setSelection(selectedOption);
+        ArrayAdapter<String> targetListFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
+                android.R.layout.simple_spinner_item, getTargetNames());
+        targetListFiller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        targetSelector.setAdapter(targetListFiller);
 
-//        targetsViewModel =
-//                ViewModelProviders.of(this).get(TargetsViewModel.class);
-//        final TextView textView = root.findViewById(R.id.text_targets);
-//        targetsViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        setUpItemList();
+        ArrayAdapter<String> itemListFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
+                android.R.layout.simple_spinner_item, getItemNames());
+        itemListFiller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemSelector.setAdapter(itemListFiller);
         return root;
     }
 
 
     private void setUpTargets() {
-//        targetNames.add("Please Select an Option");
         InputStream in = null;
         BufferedReader br = null;
         try {
@@ -77,15 +73,18 @@ public class TargetsFragment extends Fragment implements AdapterView.OnItemSelec
 
             String thisLine;
             while((thisLine = br.readLine()) != null) {
-                System.out.println(thisLine);
                 List<String> splitLine = Arrays.asList(thisLine.split("\\+_\\+"));
                 //String[] splitLine = thisLine.split(",");
-                targets.add(splitLine);
-                targetNames.add(splitLine.get(0));
+                targets.add(new Target(splitLine));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setUpItemList() {
+        items.add(new Item("one"));
+        items.add(new Item("two"));
     }
 
     @Override
@@ -94,16 +93,32 @@ public class TargetsFragment extends Fragment implements AdapterView.OnItemSelec
 //            targetNames.remove(0);
 //            firstTargetSelected = true;
 //        }
+        System.out.println(arg1.toString());
         selectedOption = position;
         LinearLayout infoPanel = root.findViewById(R.id.targetInfoContainer);
         TextView location = root.findViewById(R.id.targetInfoLocationDescription);
         TextView description = root.findViewById(R.id.targetInfoDescription);
         TextView name = root.findViewById(R.id.targetInfoName);
-        name.setText(targets.get(position).get(0));
-        location.setText(targets.get(position).get(1));
-        description.setText(targets.get(position).get(2));
+        name.setText(targets.get(position).getName());
+        location.setText(targets.get(position).getLocationDescription());
+        description.setText(targets.get(position).getDescription());
         infoPanel.setVisibility(View.VISIBLE);
-        Toast.makeText(this.getContext(), targetNames.get(position), Toast.LENGTH_LONG).show();
+    }
+
+    private String[] getTargetNames() {
+        String[] names = new String[targets.size()];
+        for (int i = 0; i < targets.size(); i++) {
+            names[i] = targets.get(i).getName();
+        }
+        return names;
+    }
+
+    private String[] getItemNames() {
+        String[] names = new String[items.size()];
+        for (int i = 0; i < items.size(); i++) {
+            names[i] = items.get(i).getName();
+        }
+        return names;
     }
 
     @Override

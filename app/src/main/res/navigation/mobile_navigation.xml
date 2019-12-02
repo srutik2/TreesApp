@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_targets"
-        android:name="com.example.finalproject.ui.targets.TargetsFragment"
-        android:label="@string/title_targets"
-        tools:layout="@layout/fragment_targets" />
+        android:id="@+id/navigation_info"
+        android:name="com.example.finalproject.ui.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
 
     <fragment
         android:id="@+id/navigation_map"
