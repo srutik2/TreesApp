@@ -1,0 +1,3 @@
+First Item+_+This Item can be found just about everywhere, maybe even right next to you right now!+_+The First Item is a small useless trinket that can be quite dangerous in the right conditions.
+The Next Item+_+Can be found just around the corner, and possibly at Target Three.+_+This will take you into the future for just a moment to show you the next event.
+The Final Example+_+This can be found at the bottom of the list of example items.+_+This is a quite rare item, however, it is very useful to make sure this UI is working at least a little bit!

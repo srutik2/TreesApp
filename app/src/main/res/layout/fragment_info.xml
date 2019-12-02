@@ -6,10 +6,10 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/welcomeTargetPage"
+        android:id="@+id/welcomeToTargetPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="96dp"
         android:text="@string/target_page_welcome"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,11 +17,11 @@
         app:layout_constraintTop_toTopOf="@+id/targetOptions" />
 
     <TextView
-        android:id="@+id/sliderInstructions"
+        android:id="@+id/sliderInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/target_page_slider_instructions"
+        android:text="@string/slider_info_default"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/modeSelector"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         android:id="@+id/targetOptions"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,8 +40,7 @@
         android:id="@+id/itemOptions"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +68,7 @@
             android:layout_marginStart="128dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="0dp"
-            android:text="@string/example_target_name"
+            android:text="@string/example_name"
             android:textStyle="bold" />
 
         <TextView
@@ -91,7 +90,7 @@
             android:text="@string/example_target_location_description" />
 
         <TextView
-            android:id="@+id/targetInfoDescrpitionTitlle"
+            android:id="@+id/targetInfoDescrpitionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -113,18 +112,75 @@
         android:id="@+id/itemInfoContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="128dp"
+        android:background="@color/primaryBackground"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/itemInfoName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="0dp"
+            android:text="@string/example_name"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/itemInfoLocationDescriptionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="72dp"
+            android:text="@string/item_location_desc"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/itemInfoLocationDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/example_item_location_description" />
+
+        <TextView
+            android:id="@+id/itemInfoDescrpitionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="72dp"
+            android:text="@string/item_desc"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/itemInfoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/example_item_description" />
+    </LinearLayout>
 
     <SeekBar
         android:id="@+id/modeSelector"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
         android:max="2"
         android:progress="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/targetInfoContainer" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

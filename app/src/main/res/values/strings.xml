@@ -4,10 +4,16 @@
     <string name="title_map">Map</string>
     <string name="title_info">Information</string>
     <string name="target_location_desc">Where to find this target:</string>
+    <string name="item_location_desc">Where to get this item:</string>
     <string name="target_desc">Target Description:</string>
-    <string name="example_target_name">Name of the target</string>
+    <string name="item_desc">Item Description:</string>
+    <string name="example_name">Name goes here</string>
     <string name="example_target_location_description">On the Southwest corner of Street one and Street two, next to that one landmark that is nearby</string>
+    <string name="example_item_location_description">This item can be found here and there, also at that one target.</string>
     <string name="example_target_description">Fairly complete description of this target, which should give some interesting information about the target\'s history and importance.</string>
+    <string name="example_item_description">This is an interesting item that comes from a cool place. It is useful for various things, such as contributing to gameplay.</string>
     <string name="target_page_welcome">Welcome to the Info Panel!\n\nThis is where you will find information on\nTargets and Items in the game.</string>
-    <string name="target_page_slider_instructions">To start, move the slider to a new page.</string>
+    <string name="slider_info_default">To start, move the slider to a new page.</string>
+    <string name="slider_info_targets">Target Information Page</string>
+    <string name="slider_info_items">Item Information Page</string>
 </resources>
