@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/background"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/custom_border"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/itemIcon"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/inventory_item_content_description"
+        android:padding="5dp"
+        android:src="@drawable/ic_info_black_24dp" />
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="@string/example_name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+</LinearLayout>

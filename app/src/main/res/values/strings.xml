@@ -16,4 +16,5 @@
     <string name="slider_info_default">To start, move the slider to a new page.</string>
     <string name="slider_info_targets">Target Information Page</string>
     <string name="slider_info_items">Item Information Page</string>
+    <string name="inventory_item_content_description">Contains an image and a text view. Intended to show the name and a small representation of an item in the inventory.</string>
 </resources>

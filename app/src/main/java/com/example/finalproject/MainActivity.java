@@ -16,21 +16,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.finalproject.ui.info.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 //import com.google.android.gms.common.util.ArrayUtils;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private ArrayAdapter<String> adapter;
-
-    private Map<String, Integer> inventoryContents  = new HashMap<>();
+    private ArrayList<Item> invContents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,72 +40,49 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //This section displays a message when you switch tabs at the bottom. Mostly for testing
-        //might be helpful in the future idk, can delete safely if not.
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller,
-                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.navigation_home) {
-                    //Toast.makeText(getApplicationContext(), "home", Toast.LENGTH_SHORT).show();
-                } else if(destination.getId() == R.id.navigation_map) {
-                    //Toast.makeText(getApplicationContext(), "map", Toast.LENGTH_SHORT).show();
-                } else if(destination.getId() == R.id.navigation_info) {
-                    //Toast.makeText(getApplicationContext(), "info", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         Spinner inventory = findViewById(R.id.inventory);
         inventory.setOnItemSelectedListener(this);
         testInventory();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getFormattedInventory());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        InventoryAdapter adapter = new InventoryAdapter(this, R.layout.inventory_entry, invContents);
+        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getFormattedInventory());
+        adapter.setDropDownViewResource(R.layout.inventory_entry);
 
-        updateInventory();
+//        updateInventory();
         inventory.setAdapter(adapter);
     }
 
-    private void updateInventory() {
-        adapter.clear();
-        adapter.add("Inventory");
-        for (String item : getFormattedInventory()) {
-            adapter.add(item);
-        }
-    }
+//    private void updateInventory() {
+//        adapter.clear();
+//        adapter.add("Inventory");
+//        for (String item : getFormattedInventory()) {
+//            adapter.add(item);
+//        }
+//    }
 
-    private List<String> getFormattedInventory() {
-        try {
-            List<String> items = new ArrayList<>(inventoryContents.keySet());
-            for (int i = 0; i < items.size(); i++) {
-                int quantity = inventoryContents.get(items.get(i));
-                if (quantity > 1) {
-                    items.set(i, quantity + " " + items.get(i) + "s");
-                } else items.remove(i);
-            }
-            System.out.println("Done Formatting: " + items.toString());
-            return items;
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error in getting inventory", Toast.LENGTH_SHORT).show();
-        }
-        return new ArrayList<String>(0);
-    }
-
-    private String[] remove(String[] array, int index) {
-        String[] smaller = new String[array.length - 1];
-        List<String> list = new ArrayList<>(Arrays.asList(array));
-        list.remove(index);
-        list.toArray(smaller);
-        return smaller;
-    }
+//    private List<String> getFormattedInventory() {
+//        try {
+//            List<String> items = new ArrayList<>(inventoryContents.keySet());
+//            for (int i = 0; i < items.size(); i++) {
+//                int quantity = inventoryContents.get(items.get(i));
+//                if (quantity > 1) {
+//                    items.set(i, quantity + " " + items.get(i) + "s");
+//                } else if (quantity != 1) items.remove(i);
+//            }
+//            System.out.println("Done Formatting: " + items.toString());
+//            return items;
+//        } catch (NullPointerException e) {
+//            e.printStackTrace();
+//            Toast.makeText(this, "Error in getting inventory", Toast.LENGTH_SHORT).show();
+//        }
+//        return new ArrayList<>(0);
+//    }
 
     private void testInventory() {
-        System.out.println("Putting test items in inventory.");
-        inventoryContents.put("stick", 6);
-        inventoryContents.put("stone", 18);
-        inventoryContents.put("broken bone", 0);
+        invContents.add(new Item("Inventory", 1 ,R.drawable.ic_inventory));
+        invContents.add(new Item("Ice Cream", 1 ,R.drawable.ic_ice_cream));
+        invContents.add(new Item("Pineapple", 13 ,R.drawable.ic_pineapple));
+        invContents.add(new Item("Book", 147 ,R.drawable.ic_info_black_24dp));
     }
 
     @Override
