@@ -3,9 +3,7 @@ package com.example.finalproject;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +14,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.finalproject.ui.info.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-
-//import com.google.android.gms.common.util.ArrayUtils;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -40,45 +35,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        Spinner inventory = findViewById(R.id.inventory);
+        final Spinner inventory = findViewById(R.id.inventory);
         inventory.setOnItemSelectedListener(this);
-        testInventory();
+        setUpInventory();
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                final int infoPageID = 2131230886;
+                if (destination.getId() == infoPageID) {
+                    inventory.setVisibility(View.GONE);
+                } else {
+                    inventory.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         InventoryAdapter adapter = new InventoryAdapter(this, R.layout.inventory_entry, invContents);
-        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getFormattedInventory());
         adapter.setDropDownViewResource(R.layout.inventory_entry);
 
-//        updateInventory();
         inventory.setAdapter(adapter);
     }
 
-//    private void updateInventory() {
-//        adapter.clear();
-//        adapter.add("Inventory");
-//        for (String item : getFormattedInventory()) {
-//            adapter.add(item);
-//        }
-//    }
+    private void addToInventory(Item item) {
 
-//    private List<String> getFormattedInventory() {
-//        try {
-//            List<String> items = new ArrayList<>(inventoryContents.keySet());
-//            for (int i = 0; i < items.size(); i++) {
-//                int quantity = inventoryContents.get(items.get(i));
-//                if (quantity > 1) {
-//                    items.set(i, quantity + " " + items.get(i) + "s");
-//                } else if (quantity != 1) items.remove(i);
-//            }
-//            System.out.println("Done Formatting: " + items.toString());
-//            return items;
-//        } catch (NullPointerException e) {
-//            e.printStackTrace();
-//            Toast.makeText(this, "Error in getting inventory", Toast.LENGTH_SHORT).show();
-//        }
-//        return new ArrayList<>(0);
-//    }
+    }
 
-    private void testInventory() {
+    private void setUpInventory() {
         invContents.add(new Item("Inventory", 1 ,R.drawable.ic_inventory));
         invContents.add(new Item("Ice Cream", 1 ,R.drawable.ic_ice_cream));
         invContents.add(new Item("Pineapple", 13 ,R.drawable.ic_pineapple));

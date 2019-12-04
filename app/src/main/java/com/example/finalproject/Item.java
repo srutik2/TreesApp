@@ -1,6 +1,4 @@
-package com.example.finalproject.ui.info;
-
-import android.graphics.drawable.Drawable;
+package com.example.finalproject;
 
 import java.util.List;
 
@@ -51,11 +49,11 @@ public class Item {
         return name;
     }
 
-    String getLocationDescription() {
+    public String getLocationDescription() {
         return locationDescription;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -63,19 +61,11 @@ public class Item {
         name = newName;
     }
 
-    public void setLocationDescription(final String newLocationDescription) {
-        locationDescription = newLocationDescription;
-    }
-
-    public void setDescription(final String newDescription) {
-        description = newDescription;
-    }
-
-    public int getQuantity() {
+    int getQuantity() {
         return quantity;
     }
 
-    public int getImageResource() {
+    int getImageResource() {
         return icon;
     }
 }

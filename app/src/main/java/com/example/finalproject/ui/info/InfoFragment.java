@@ -10,12 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.finalproject.Item;
 import com.example.finalproject.R;
+import com.example.finalproject.Target;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,30 +28,42 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class InfoFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class InfoFragment extends Fragment {
 
     private List<Target> targets = new ArrayList<>();
-
     private List<Item> items = new ArrayList<>();
-
-    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        root = inflater.inflate(R.layout.fragment_info, container, false);
+        final View root = inflater.inflate(R.layout.fragment_info, container, false);
 
         Spinner targetSelector = root.findViewById(R.id.targetOptions);
-        targetSelector.setOnItemSelectedListener(this);
+        targetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                targetSelected(i, root);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
 
         Spinner itemSelector = root.findViewById(R.id.itemOptions);
-        itemSelector.setOnItemSelectedListener(this);
+        itemSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                itemSelected(i, root);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
 
         setUpList("targetData.txt");
         ArrayAdapter<String> targetListFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
                 android.R.layout.simple_spinner_item, getTargetNames());
         targetListFiller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        System.out.println();
         targetSelector.setAdapter(targetListFiller);
 
         setUpList("itemInfo.txt");
@@ -63,12 +76,12 @@ public class InfoFragment extends Fragment implements AdapterView.OnItemSelected
         pageSelector.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
-                System.out.println(i);
                 TextView welcome = root.findViewById(R.id.welcomeToTargetPage);
                 Spinner targets = root.findViewById(R.id.targetOptions);
                 LinearLayout targetInfo = root.findViewById(R.id.targetInfoContainer);
                 Spinner items = root.findViewById(R.id.itemOptions);
                 LinearLayout itemInfo = root.findViewById(R.id.itemInfoContainer);
+
                 welcome.setVisibility(View.GONE);
                 targets.setVisibility(View.GONE);
                 targetInfo.setVisibility(View.GONE);
@@ -123,40 +136,24 @@ public class InfoFragment extends Fragment implements AdapterView.OnItemSelected
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View arg1, int position, long id) {
-//        if (!firstTargetSelected) {
-//            targetNames.remove(0);
-//            firstTargetSelected = true;
-//        }
-        System.out.println("select " + position);
-        System.out.println(adapterView.getId());
-        int TARGET_SELECTOR_ID = 2131230967;
-        int ITEM_SELECTOR_ID = 2131230857;
-        if (adapterView.getId() == TARGET_SELECTOR_ID) {
-            System.out.println("targetSelector");
-            targetSelected(position);
-        } else if (adapterView.getId() == ITEM_SELECTOR_ID) {
-            itemSelected(position);
-        }
-    }
-
-    private void targetSelected(final int position) {
+    private void targetSelected(final int position, final View root) {
         LinearLayout infoPanel = root.findViewById(R.id.targetInfoContainer);
         TextView location = root.findViewById(R.id.targetInfoLocationDescription);
         TextView description = root.findViewById(R.id.targetInfoDescription);
         TextView name = root.findViewById(R.id.targetInfoName);
+
         name.setText(targets.get(position).getName());
         location.setText(targets.get(position).getLocationDescription());
         description.setText(targets.get(position).getDescription());
         infoPanel.setVisibility(View.VISIBLE);
     }
 
-    private void itemSelected(final int position) {
+    private void itemSelected(final int position, final View root) {
         LinearLayout infoPanel = root.findViewById(R.id.itemInfoContainer);
         TextView location = root.findViewById(R.id.itemInfoLocationDescription);
         TextView description = root.findViewById(R.id.itemInfoDescription);
         TextView name = root.findViewById(R.id.itemInfoName);
+
         name.setText(items.get(position).getName());
         location.setText(items.get(position).getLocationDescription());
         description.setText(items.get(position).getDescription());
@@ -177,12 +174,5 @@ public class InfoFragment extends Fragment implements AdapterView.OnItemSelected
             names[i] = items.get(i).getName();
         }
         return names;
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        Toast.makeText(this.getContext(), "Nothing Selected", Toast.LENGTH_LONG).show();
-        // TODO Auto-generated method stub
-        //honestly don't know what this method does.
     }
 }

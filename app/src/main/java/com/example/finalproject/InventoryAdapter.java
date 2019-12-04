@@ -1,7 +1,6 @@
 package com.example.finalproject;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -10,8 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-
-import com.example.finalproject.ui.info.Item;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,7 +54,7 @@ class InventoryAdapter extends ArrayAdapter {
         LinearLayout background = view.findViewById(R.id.background);
         TextView itemName = view.findViewById(R.id.itemName);
         ImageView icon = view.findViewById(R.id.itemIcon);
-            if (position != 0) background.setBackgroundColor(context.getResources().getColor(R.color.primaryBackground));
+            if (position == 0) background.setBackground(context.getResources().getDrawable(R.drawable.custom_border));
         Item current = items.get(position);
         if (current.getQuantity() > 1) {
             itemName.setText((current.getQuantity() + " " + current.getName() + "s"));
