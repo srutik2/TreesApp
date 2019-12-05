@@ -5,13 +5,9 @@ import java.util.List;
 public class Item {
 
     private String name;
-
     private int quantity;
-
     private int icon;
-
     private String locationDescription;
-
     private String description;
 
     public Item(final String setName, final String setLocationDescription, final String setDescription, final int setQuantity) {

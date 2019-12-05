@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
 
         final Spinner inventory = findViewById(R.id.inventory);
         inventory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

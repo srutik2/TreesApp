@@ -16,11 +16,13 @@ import java.util.ArrayList;
 
 class InventoryAdapter extends ArrayAdapter {
 
+    /**Context where you set up the spinner. */
     private Context context;
 
+    /**ArrayList that contains all items in the inventory. */
     private ArrayList<Item> items;
 
-    InventoryAdapter(@NonNull Context setContext, int resource, ArrayList<Item> objects) {
+    InventoryAdapter(@NonNull final Context setContext, final int resource, final ArrayList<Item> objects) {
         super(setContext, resource, objects);
         context = setContext;
         items = objects;
@@ -33,7 +35,7 @@ class InventoryAdapter extends ArrayAdapter {
 
     @NotNull
     @Override
-    public View getView(int position, View convertView, @NotNull ViewGroup parent) {
+    public View getView(final int position, final View convertView, @NotNull final ViewGroup parent) {
         //LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = View.inflate(context, R.layout.inventory_entry, null);
         TextView itemName = view.findViewById(R.id.itemName);
@@ -49,12 +51,14 @@ class InventoryAdapter extends ArrayAdapter {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, @NotNull ViewGroup parent) {
+    public View getDropDownView(final int position, final View convertView, @NotNull final ViewGroup parent) {
         View view = View.inflate(context, R.layout.inventory_entry, null);
         LinearLayout background = view.findViewById(R.id.background);
         TextView itemName = view.findViewById(R.id.itemName);
         ImageView icon = view.findViewById(R.id.itemIcon);
-            if (position == 0) background.setBackground(context.getResources().getDrawable(R.drawable.custom_border));
+        if (position == 0) {
+            background.setBackground(context.getResources().getDrawable(R.drawable.custom_border));
+        }
         Item current = items.get(position);
         if (current.getQuantity() > 1) {
             itemName.setText((current.getQuantity() + " " + current.getName() + "s"));
