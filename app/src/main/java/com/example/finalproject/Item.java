@@ -45,6 +45,15 @@ public class Item {
         if (allInfo.get(2) != null) description = allInfo.get(2).toString();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Item)) {
+            return false;
+        }
+        Item item = (Item) other;
+        return name.equals(item.getName()) && icon == item.getImageResource();
+    }
+
     public String getName() {
         return name;
     }
@@ -67,5 +76,13 @@ public class Item {
 
     int getImageResource() {
         return icon;
+    }
+
+    public void increment() {
+        quantity++;
+    }
+
+    public void add(int amount) {
+        quantity += amount;
     }
 }

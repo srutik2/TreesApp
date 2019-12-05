@@ -17,13 +17,14 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements InventoryManager {
 
     private ArrayList<Item> invContents = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -36,14 +37,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         NavigationUI.setupWithNavController(navView, navController);
 
         final Spinner inventory = findViewById(R.id.inventory);
-        inventory.setOnItemSelectedListener(this);
+        inventory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                adapterView.setSelection(0);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
         setUpInventory();
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                final int infoPageID = 2131230886;
-                if (destination.getId() == infoPageID) {
+                assert destination.getLabel() != null;
+                if (destination.getLabel().equals(getResources().getString(R.string.title_info))) {
                     inventory.setVisibility(View.GONE);
                 } else {
                     inventory.setVisibility(View.VISIBLE);
@@ -57,8 +65,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         inventory.setAdapter(adapter);
     }
 
-    private void addToInventory(Item item) {
+    @Override
+    public void addToInventory(Item item) {
+        if (invContents.contains(item)) {
+            item.increment();
+        } else {
+            invContents.add(item);
+        }
+    }
 
+    @Override
+    public List<Item> getInventory() {
+        return invContents;
     }
 
     private void setUpInventory() {
@@ -67,12 +85,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         invContents.add(new Item("Pineapple", 13 ,R.drawable.ic_pineapple));
         invContents.add(new Item("Book", 147 ,R.drawable.ic_info_black_24dp));
     }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        adapterView.setSelection(0);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) { }
 }

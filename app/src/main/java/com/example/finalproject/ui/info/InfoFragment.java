@@ -76,26 +76,7 @@ public class InfoFragment extends Fragment {
         pageSelector.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
-                TextView welcome = root.findViewById(R.id.welcomeToTargetPage);
-                Spinner targets = root.findViewById(R.id.targetOptions);
-                LinearLayout targetInfo = root.findViewById(R.id.targetInfoContainer);
-                Spinner items = root.findViewById(R.id.itemOptions);
-                LinearLayout itemInfo = root.findViewById(R.id.itemInfoContainer);
-
-                welcome.setVisibility(View.GONE);
-                targets.setVisibility(View.GONE);
-                targetInfo.setVisibility(View.GONE);
-                items.setVisibility(View.GONE);
-                itemInfo.setVisibility(View.GONE);
-                switch (i) {
-                    case 0: welcome.setVisibility(View.VISIBLE);
-                        break;
-                    case 1: targets.setVisibility(View.VISIBLE);
-                        targetInfo.setVisibility(View.VISIBLE);
-                        break;
-                    case 2: items.setVisibility(View.VISIBLE);
-                        itemInfo.setVisibility(View.VISIBLE);
-                }
+                selectPage(root, i);
             }
 
             @Override
@@ -103,14 +84,12 @@ public class InfoFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 TextView info = root.findViewById(R.id.sliderInfo);
-                if (seekBar.getProgress() == 0) {
-                    info.setText(R.string.slider_info_default);
-                }
-                if (seekBar.getProgress() == 1) {
-                    info.setText(R.string.slider_info_targets);
-                }
-                if (seekBar.getProgress() == 2) {
-                    info.setText(R.string.slider_info_items);
+                switch (seekBar.getProgress()) {
+                    case 0: info.setText(R.string.slider_info_default);
+                        break;
+                    case 1: info.setText(R.string.slider_info_targets);
+                        break;
+                    case 2: info.setText(R.string.slider_info_items);
                 }
             }
         });
@@ -158,6 +137,29 @@ public class InfoFragment extends Fragment {
         location.setText(items.get(position).getLocationDescription());
         description.setText(items.get(position).getDescription());
         infoPanel.setVisibility(View.VISIBLE);
+    }
+
+    private void selectPage(final View root, final int page) {
+        TextView welcome = root.findViewById(R.id.welcomeToTargetPage);
+        Spinner targets = root.findViewById(R.id.targetOptions);
+        LinearLayout targetInfo = root.findViewById(R.id.targetInfoContainer);
+        Spinner items = root.findViewById(R.id.itemOptions);
+        LinearLayout itemInfo = root.findViewById(R.id.itemInfoContainer);
+
+        welcome.setVisibility(View.GONE);
+        targets.setVisibility(View.GONE);
+        targetInfo.setVisibility(View.GONE);
+        items.setVisibility(View.GONE);
+        itemInfo.setVisibility(View.GONE);
+        switch (page) {
+            case 0: welcome.setVisibility(View.VISIBLE);
+                break;
+            case 1: targets.setVisibility(View.VISIBLE);
+                targetInfo.setVisibility(View.VISIBLE);
+                break;
+            case 2: items.setVisibility(View.VISIBLE);
+                itemInfo.setVisibility(View.VISIBLE);
+        }
     }
 
     private String[] getTargetNames() {
