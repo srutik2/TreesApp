@@ -30,35 +30,62 @@ import java.util.Objects;
 
 public class InfoFragment extends Fragment {
 
+    /**List of Targets to show info about. */
     private List<Target> targets = new ArrayList<>();
+
+    /**List of Items to show info about. */
     private List<Item> items = new ArrayList<>();
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    /**Called when fragment is called. Sets up spinners and the slider.
+     * @param inflater inflater used to inflate root from parrent.
+     * @param container parent of root view.
+     * @param save still don't know how to use this at all.
+     * @return root view. */
+    public View onCreateView(@NonNull final LayoutInflater inflater,
+                             final ViewGroup container, final Bundle save) {
+        super.onCreateView(inflater, container, save);
 
         final View root = inflater.inflate(R.layout.fragment_info, container, false);
 
+        //target spinner has options to select a target from list to show info.
         Spinner targetSelector = root.findViewById(R.id.targetOptions);
         targetSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**Calls a helper function when target spinner changes selection.
+             * @param adapterView the adapterView that set up the spinner.
+             * @param view the view which holds the spinner.
+             * @param i the position of the spinner.
+             * @param l Id of the selected position I believe. */
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(final AdapterView<?> adapterView,
+                                       final View view, final int i, final long l) {
                 targetSelected(i, root);
             }
+
+            /** unused as of right now.
+             * @param adapterView adapterView that fills spinner. */
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) { }
+            public void onNothingSelected(final AdapterView<?> adapterView) { }
         });
 
+        //gives options for user to select a item from the list to show info.
         Spinner itemSelector = root.findViewById(R.id.itemOptions);
         itemSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**Calls a helper function when item spinner changes selection.
+             * @param adapterView the adapterView that set up the spinner.
+             * @param view the view which holds the spinner.
+             * @param i the position of the spinner.
+             * @param l Id of the selected position I believe. */
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(final AdapterView<?> adapterView, final View view, final int i, final long l) {
                 itemSelected(i, root);
             }
+            /** unused as of right now.
+             * @param adapterView adapterView that fills spinner. */
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) { }
+            public void onNothingSelected(final AdapterView<?> adapterView) { }
         });
 
+        //gets the targets from targetData.txt, and sets up an ArrayAdapter to fill the target spinner.
         setUpList("targetData.txt");
         ArrayAdapter<String> targetListFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
                 android.R.layout.simple_spinner_item, getTargetNames());
@@ -66,23 +93,35 @@ public class InfoFragment extends Fragment {
         System.out.println();
         targetSelector.setAdapter(targetListFiller);
 
+        //gets items from itemInfo.txt, sets up ArrayAdapter to fill spinner.
         setUpList("itemInfo.txt");
         ArrayAdapter<String> itemListFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
                 android.R.layout.simple_spinner_item, getItemNames());
         itemListFiller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         itemSelector.setAdapter(itemListFiller);
 
+        //creates a seek bar to go between layouts on the info page.
         SeekBar pageSelector = root.findViewById(R.id.modeSelector);
         pageSelector.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            /**Selects what info is shown when slider changes position.
+             * @param seekBar the seekBar whose position changed.
+             * @param i the current position of the seekBar.
+             * @param fromUser called: true = manually, false = programmatically. */
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
+            public void onProgressChanged(final SeekBar seekBar, final int i, final boolean fromUser) {
                 selectPage(root, i);
             }
 
+            /** does nothing (for now at least).
+             * @param seekBar seekBar that changes between targets and items.
+             */
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            public void onStartTrackingTouch(final SeekBar seekBar) { }
+
+            /**Changes a textView when user moves slider.
+             *  @param seekBar the seekBar obeject which changes pages. */
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onStopTrackingTouch(final SeekBar seekBar) {
                 TextView info = root.findViewById(R.id.sliderInfo);
                 switch (seekBar.getProgress()) {
                     case 0: info.setText(R.string.slider_info_default);
@@ -90,6 +129,9 @@ public class InfoFragment extends Fragment {
                     case 1: info.setText(R.string.slider_info_targets);
                         break;
                     case 2: info.setText(R.string.slider_info_items);
+                        break;
+                    default:
+                        info.setText(R.string.slider_info_error);
                 }
             }
         });
@@ -97,24 +139,36 @@ public class InfoFragment extends Fragment {
         return root;
     }
 
+    /**Takes a filename and sets up the list whose values are stored inside.
+     * @param source name of the file from which to draw the list of things. */
     private void setUpList(final String source) {
         InputStream in;
         BufferedReader br;
         try {
+            //creates buffered reader to read each line of the source file.
             in = Objects.requireNonNull(getActivity()).getAssets().open(source);
             br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
+            //splits each line into parts, fills corresponding list.
             String thisLine;
-            while((thisLine = br.readLine()) != null) {
+            while ((thisLine = br.readLine()) != null) {
                 List<String> splitLine = Arrays.asList(thisLine.split("\\+_\\+"));
-                if (source.equals("targetData.txt")) targets.add(new Target(splitLine));
-                if (source.equals("itemInfo.txt")) items.add(new Item(splitLine));
+                if (source.equals("targetData.txt")) {
+                    targets.add(new Target(splitLine));
+                }
+                if (source.equals("itemInfo.txt")) {
+                    items.add(new Item(splitLine));
+                }
             }
         } catch (IOException e) {
+            //something went wrong, likely in getting the file.
             e.printStackTrace();
         }
     }
 
+    /** updates info displayed when a target is selected by target spinner.
+     * @param position of slider, and target index.
+     * @param root root view on which to find the views which hold info. */
     private void targetSelected(final int position, final View root) {
         LinearLayout infoPanel = root.findViewById(R.id.targetInfoContainer);
         TextView location = root.findViewById(R.id.targetInfoLocationDescription);
@@ -127,6 +181,9 @@ public class InfoFragment extends Fragment {
         infoPanel.setVisibility(View.VISIBLE);
     }
 
+    /** updates info displayed when an item is selected by item spinner.
+     * @param position of slider, and item index.
+     * @param root root view on which to find the views which hold info. */
     private void itemSelected(final int position, final View root) {
         LinearLayout infoPanel = root.findViewById(R.id.itemInfoContainer);
         TextView location = root.findViewById(R.id.itemInfoLocationDescription);
@@ -139,29 +196,40 @@ public class InfoFragment extends Fragment {
         infoPanel.setVisibility(View.VISIBLE);
     }
 
+    /**When slider changes, makes certain views visible to show info.
+     * @param root root view on which to find all views.
+     * @param page the selected page. */
     private void selectPage(final View root, final int page) {
+        //get all views
         TextView welcome = root.findViewById(R.id.welcomeToTargetPage);
-        Spinner targets = root.findViewById(R.id.targetOptions);
+        Spinner targetSpinner = root.findViewById(R.id.targetOptions);
         LinearLayout targetInfo = root.findViewById(R.id.targetInfoContainer);
-        Spinner items = root.findViewById(R.id.itemOptions);
+        Spinner itemSpinner = root.findViewById(R.id.itemOptions);
         LinearLayout itemInfo = root.findViewById(R.id.itemInfoContainer);
 
+        //set everything to be gone
         welcome.setVisibility(View.GONE);
-        targets.setVisibility(View.GONE);
+        targetSpinner.setVisibility(View.GONE);
         targetInfo.setVisibility(View.GONE);
-        items.setVisibility(View.GONE);
+        itemSpinner.setVisibility(View.GONE);
         itemInfo.setVisibility(View.GONE);
+
+        //make just the applicable views visible.
         switch (page) {
             case 0: welcome.setVisibility(View.VISIBLE);
                 break;
-            case 1: targets.setVisibility(View.VISIBLE);
+            case 1: targetSpinner.setVisibility(View.VISIBLE);
                 targetInfo.setVisibility(View.VISIBLE);
                 break;
-            case 2: items.setVisibility(View.VISIBLE);
+            case 2: itemSpinner.setVisibility(View.VISIBLE);
                 itemInfo.setVisibility(View.VISIBLE);
+                break;
+            default: welcome.setVisibility(View.VISIBLE);
         }
     }
 
+    /**Makes a String[] from the names of all targets.
+     * @return a String[] of all target names. */
     private String[] getTargetNames() {
         String[] names = new String[targets.size()];
         for (int i = 0; i < targets.size(); i++) {
@@ -170,6 +238,8 @@ public class InfoFragment extends Fragment {
         return names;
     }
 
+    /**Makes a String[] from the names of all items.
+     * @return a String[] of all item names. */
     private String[] getItemNames() {
         String[] names = new String[items.size()];
         for (int i = 0; i < items.size(); i++) {

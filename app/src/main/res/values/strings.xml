@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Final Project</string>
+    <string name="app_name">Treesapp</string>
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
     <string name="title_info">Information</string>
@@ -14,6 +14,7 @@
     <string name="example_item_description">This is an interesting item that comes from a cool place. It is useful for various things, such as contributing to gameplay.</string>
     <string name="target_page_welcome">Welcome to the Info Panel!\n\nThis is where you will find information on\nTargets and Items in the game.</string>
     <string name="slider_info_default">To start, move the slider to a new page.</string>
+    <string name="slider_info_error">Uh Oh! Cannot find slider position.</string>
     <string name="slider_info_targets">Target Information Page</string>
     <string name="slider_info_items">Item Information Page</string>
     <string name="inventory_item_content_description">Contains an image and a text view. Intended to show the name and a small representation of an item in the inventory.</string>
