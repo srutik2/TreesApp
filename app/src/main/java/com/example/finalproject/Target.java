@@ -35,14 +35,23 @@ public class Target {
     /**LatLng object that represents the Target's location. */
     private LatLng location;
     /**An int representing the color of the Target. Darkish green by default. */
-    private int color = Color.parseColor("#008577");
+    private int color = Color.parseColor("#000000");
 
     /**The marker object that represents this target object.*/
     private Marker targetMarker;
 
+    /**Item given as a reward by the target. */
+    private Item reward;
+    /**An Inventory Manager implemented by MainActivity.*/
+    private InventoryManager invMan;
+
     /** adds info about the Target.
-     * @param allInfo a string[] with name, location desc, and description. */
+     * Format: name, locDesc, desc, snippet, location, reward
+     * For now, I will assume the icon and color will be the same.
+     * The reward will be a string, item object will have to be found from that.
+     * @param allInfo a string[] info to store. */
     public Target(final List allInfo) {
+        //Thinking about making the parameter a Linked list and using pop()
         if (allInfo == null) {
             return;
         }
@@ -61,12 +70,12 @@ public class Target {
      * @param addSnippet snippet displayed under name.
      * @param setIcon R.drawable id to represent Target on map.
      * @param setColor color of target on map. */
-    public Target(final LatLng setLocation, final String setName, final String addSnippet, final int setIcon, final int setColor) {
+    public Target(final LatLng setLocation, final String setName, final String addSnippet, final int setIcon, final String setColor) {
         location = setLocation;
         name = setName;
         snippet = addSnippet;
         icon = setIcon;
-        color = setColor;
+        color = Color.parseColor(setColor);
     }
 
     /**Constructor that uses default color.
@@ -104,8 +113,10 @@ public class Target {
      * reulting marker is stored for future use in a global variable.
      * @param map map on which to draw marker.
      * @param context passed directly to vectorToBitmap() to get resources.
+     * @param im an InventoryManager which is used to give the player the reward Item.
      */
-    public void setMarker(final GoogleMap map, final Context context) {
+    public void setMarker(final GoogleMap map, final Context context, final InventoryManager im) {
+        invMan = im;
         MarkerOptions options = new MarkerOptions();
         options.position(location).title(name);
         if (snippet != null && !(snippet.equals(""))) {
@@ -160,5 +171,16 @@ public class Target {
     /**@param newName set a new name for the target. */
     void setName(final String newName) {
         name = newName;
+    }
+
+    /**@param item the item which will be set as the reward for this target. */
+    public void setReward(final Item item) {
+        reward = item;
+    }
+
+    /**Put the reward associated with this target in the player's inventory. */
+    public void reward() {
+        System.out.println(reward.getName());
+        invMan.addToInventory(reward);
     }
 }

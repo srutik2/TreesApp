@@ -1,5 +1,6 @@
 package com.example.finalproject.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.finalproject.InventoryManager;
 import com.example.finalproject.Item;
 import com.example.finalproject.R;
 import com.example.finalproject.Target;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,6 +39,9 @@ public class InfoFragment extends Fragment {
 
     /**List of Items to show info about. */
     private List<Item> items = new ArrayList<>();
+
+    /**An Inventory Manager implemented by MainActivity.*/
+    private InventoryManager invMan;
 
     /**Called when fragment is called. Sets up spinners and the slider.
      * @param inflater inflater used to inflate root from parrent.
@@ -56,8 +63,7 @@ public class InfoFragment extends Fragment {
              * @param i the position of the spinner.
              * @param l Id of the selected position I believe. */
             @Override
-            public void onItemSelected(final AdapterView<?> adapterView,
-                                       final View view, final int i, final long l) {
+            public void onItemSelected(final AdapterView<?> adapterView, final View view, final int i, final long l) {
                 targetSelected(i, root);
             }
 
@@ -86,7 +92,7 @@ public class InfoFragment extends Fragment {
         });
 
         //gets the targets from targetData.txt, and sets up an ArrayAdapter to fill the target spinner.
-        setUpList("targetData.txt");
+        targets = invMan.getAllTargets();
         ArrayAdapter<String> targetListFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
                 android.R.layout.simple_spinner_item, getTargetNames());
         targetListFiller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,7 +100,7 @@ public class InfoFragment extends Fragment {
         targetSelector.setAdapter(targetListFiller);
 
         //gets items from itemInfo.txt, sets up ArrayAdapter to fill spinner.
-        setUpList("itemInfo.txt");
+        items = invMan.getAllItems();
         ArrayAdapter<String> itemListFiller = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()),
                 android.R.layout.simple_spinner_item, getItemNames());
         itemListFiller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -139,30 +145,17 @@ public class InfoFragment extends Fragment {
         return root;
     }
 
-    /**Takes a filename and sets up the list whose values are stored inside.
-     * @param source name of the file from which to draw the list of things. */
-    private void setUpList(final String source) {
-        InputStream in;
-        BufferedReader br;
+    /** Pretty sure this is called when this fragment is attached to fragment view in MainActivity.
+     * This function's purpose is to create the inventory manager based on MainActivity's implementation.
+     * @param context main context */
+    @Override
+    public void onAttach(@NotNull final Context context) {
+        super.onAttach(context);
         try {
-            //creates buffered reader to read each line of the source file.
-            in = Objects.requireNonNull(getActivity()).getAssets().open(source);
-            br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-
-            //splits each line into parts, fills corresponding list.
-            String thisLine;
-            while ((thisLine = br.readLine()) != null) {
-                List<String> splitLine = Arrays.asList(thisLine.split("\\+_\\+"));
-                if (source.equals("targetData.txt")) {
-                    targets.add(new Target(splitLine));
-                }
-                if (source.equals("itemInfo.txt")) {
-                    items.add(new Item(splitLine));
-                }
-            }
-        } catch (IOException e) {
-            //something went wrong, likely in getting the file.
-            e.printStackTrace();
+            invMan = (InventoryManager) context;
+        } catch (ClassCastException castException) {
+            System.out.println("The activity does not implement the listener.");
+            castException.printStackTrace();
         }
     }
 
@@ -216,8 +209,6 @@ public class InfoFragment extends Fragment {
 
         //make just the applicable views visible.
         switch (page) {
-            case 0: welcome.setVisibility(View.VISIBLE);
-                break;
             case 1: targetSpinner.setVisibility(View.VISIBLE);
                 targetInfo.setVisibility(View.VISIBLE);
                 break;

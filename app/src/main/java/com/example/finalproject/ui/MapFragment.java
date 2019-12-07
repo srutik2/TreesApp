@@ -1,5 +1,6 @@
 package com.example.finalproject.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.finalproject.InventoryManager;
+import com.example.finalproject.Item;
 import com.example.finalproject.R;
 import com.example.finalproject.Target;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,6 +19,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapFragment extends Fragment {
 
@@ -29,6 +38,12 @@ public class MapFragment extends Fragment {
     private static final int ZOOM = 16;
     /**How long it takes to zoom camera (ms). */
     private static final int ZOOM_DUR = 16;
+
+    /**An Inventory Manager implemented by MainActivity.*/
+    private InventoryManager invMan;
+
+    /**All targets on the map.*/
+    private List<Target> targets = new ArrayList<>();
 
     /**Apparently this is required. */
     public MapFragment() {
@@ -67,15 +82,55 @@ public class MapFragment extends Fragment {
 
                     createExampleMarkers();
 
+                    map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(final Marker marker) {
+                            reward(marker);
+                            return false;
+                        }
+                    });
+
                 }
             });
         }
         return root;
     }
 
+    /**Rewards the player based on the target they visit.
+     * @param marker A marker that represents the target giving a reward. */
+    private void reward(final Marker marker) {
+        System.out.println("reward");
+        for (Target t : targets) {
+            if (t.getMarker().equals(marker)) {
+                System.out.println(t.getName());
+                t.reward();
+            }
+        }
+    }
+
     /** sets up some example markers for testing. Will be removed. */
     private void createExampleMarkers() {
-        new Target(new LatLng(40.109760, -88.228156), "Douglas-Fir", "Pseudotsuga menziesii", R.drawable.ic_pine_tree).setMarker(map, getContext());
-        new Target(new LatLng(40.108827, -88.227979), "Eastern White Pine", "Pinus strobus", R.drawable.ic_pine_tree).setMarker(map, getContext());
+
+        //add a constructor that takes the reward item soon.
+        targets.add(new Target(new LatLng(40.109760, -88.228156), "Douglas-Fir", "Pseudotsuga menziesii", R.drawable.ic_pine_tree, "#008577"));
+        targets.add(new Target(new LatLng(40.108827, -88.227979), "Eastern White Pine", "Pinus strobus", R.drawable.ic_pine_tree, "#008577"));
+        for (Target t : targets) {
+            t.setMarker(map, getContext(), invMan);
+            t.setReward(new Item("Leaf", R.drawable.ic_leaf));
+        }
+    }
+
+    /** Pretty sure this is called when this fragment is attached to fragment view in MainActivity.
+     * This function's purpose is to create the inventory manager based on MainActivity's implementation.
+     * @param context main context */
+    @Override
+    public void onAttach(@NotNull final Context context) {
+        super.onAttach(context);
+        try {
+            invMan = (InventoryManager) context;
+        } catch (ClassCastException castException) {
+            System.out.println("The activity does not implement the listener.");
+            castException.printStackTrace();
+        }
     }
 }

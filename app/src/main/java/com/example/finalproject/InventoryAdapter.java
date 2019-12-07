@@ -40,6 +40,7 @@ class InventoryAdapter extends ArrayAdapter {
         View view = View.inflate(context, R.layout.inventory_entry, null);
         TextView itemName = view.findViewById(R.id.itemName);
         ImageView icon = view.findViewById(R.id.itemIcon);
+        items.get(position).setColor("#000000");
         Item current = items.get(position);
         if (current.getQuantity() > 1) {
             itemName.setText((current.getQuantity() + " " + current.getName() + "s"));

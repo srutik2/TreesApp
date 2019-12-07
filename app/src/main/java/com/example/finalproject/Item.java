@@ -4,45 +4,56 @@ import java.util.List;
 
 public class Item {
 
+    /**Display name. */
     private String name;
+    /**Quantity in inventory.. */
     private int quantity;
+    /**R.drawable vector image that represents item. */
     private int icon;
+    /**Where to find item, used in info page. */
     private String locationDescription;
+    /**Item description used in info page. */
     private String description;
 
-    public Item(final String setName, final String setLocationDescription, final String setDescription, final int setQuantity) {
+    /**Used to make a new inventory entry.
+     * @param setName display name.
+     * @param amount quantity to start with in inventory.
+     * @param setIcon display icon id. */
+    public Item(final String setName, final int amount, final int setIcon) {
         name = setName;
-        locationDescription = setLocationDescription;
-        description = setDescription;
-        quantity = setQuantity;
-    }
-
-    public Item(final String setName, final int setQuantity, final int setIcon) {
-        name = setName;
-        quantity = setQuantity;
+        quantity = amount;
         icon = setIcon;
-        locationDescription = "";
-        description = "";
     }
 
-    public Item(final String setName, final int setQuantity) {
+    /**Used to make a new inventory entry with a default 1 quantity..
+     * @param setName display name.
+     * @param setIcon display icon id. */
+    public Item(final String setName, final int setIcon) {
         name = setName;
-        quantity = setQuantity;
-        locationDescription = "";
-        description = "";
+        icon = setIcon;
+        quantity = 1;
     }
 
+    /**Used to create an item used in the info page.
+     * @param allInfo a String[] containing name, location, and description.
+     */
     public Item(final List allInfo) {
         if (allInfo == null) {
             return;
         }
-        if (allInfo.get(0) != null) name = allInfo.get(0).toString();
-        if (allInfo.get(1) != null) locationDescription = allInfo.get(1).toString();
-        if (allInfo.get(2) != null) description = allInfo.get(2).toString();
+        name = allInfo.get(0).toString();
+        if (allInfo.get(1) != null) {
+            locationDescription = allInfo.get(1).toString();
+        }
+        if (allInfo.get(2) != null) {
+            description = allInfo.get(2).toString();
+        }
     }
 
-    @Override
-    public boolean equals(Object other) {
+    /** Two items are equal if they have the same name and icon.
+     * @param other other item to compare.
+     * @return whether the other Item is equal to this one. */
+    public boolean equals(final Object other) {
         if (!(other instanceof Item)) {
             return false;
         }
@@ -50,35 +61,46 @@ public class Item {
         return name.equals(item.getName()) && icon == item.getImageResource();
     }
 
+    /**@return the hashCode based on the super implementation.
+     * Checkstyle wants me to override this if I override equals(other). */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**@return the item name. */
     public String getName() {
         return name;
     }
 
+    /**@return the location description. */
     public String getLocationDescription() {
         return locationDescription;
     }
 
+    /**@return the description. */
     public String getDescription() {
         return description;
     }
 
-    void setName(final String newName) {
-        name = newName;
-    }
-
+    /**@return the quantity. */
     int getQuantity() {
         return quantity;
     }
 
+    /**@return the id of the R.drawable file with this icon. */
     int getImageResource() {
         return icon;
     }
 
+    /**Increase the quantity by one. */
     public void increment() {
         quantity++;
+        System.out.println("quantity increased to " + quantity);
     }
 
-    public void add(int amount) {
-        quantity += amount;
+    /**Set the color of the icon. */
+    public void setColor(final String color) {
+        //set the icon color manually.
     }
 }

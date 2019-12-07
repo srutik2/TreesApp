@@ -20,8 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class HomeFragment extends Fragment {
 
-    /**Creates an object of the Interface InventoryManager, which is implemented by MainActivity.
-     * MainActivity stores and handles the inventory, this lets me affect the inventory from here.*/
+    /**An Inventory Manager implemented by MainActivity.*/
     private InventoryManager inventoryManager;
 
     /**Runs when this view is created by te navigation manager.
