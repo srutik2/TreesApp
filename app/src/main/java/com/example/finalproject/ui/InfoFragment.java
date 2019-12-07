@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -182,10 +183,12 @@ public class InfoFragment extends Fragment {
         TextView location = root.findViewById(R.id.itemInfoLocationDescription);
         TextView description = root.findViewById(R.id.itemInfoDescription);
         TextView name = root.findViewById(R.id.itemInfoName);
+        ImageView itemIcon = root.findViewById(R.id.itemIcon);
 
         name.setText(items.get(position).getName());
         location.setText(items.get(position).getLocationDescription());
         description.setText(items.get(position).getDescription());
+        itemIcon.setImageResource(items.get(position).getImageResource());
         infoPanel.setVisibility(View.VISIBLE);
     }
 

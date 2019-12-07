@@ -115,7 +115,7 @@ public class MapFragment extends Fragment {
         targets.add(new Target(new LatLng(40.109760, -88.228156), "Douglas-Fir", "Pseudotsuga menziesii", R.drawable.ic_pine_tree, "#008577"));
         targets.add(new Target(new LatLng(40.108827, -88.227979), "Eastern White Pine", "Pinus strobus", R.drawable.ic_pine_tree, "#008577"));
         for (Target t : targets) {
-            t.setMarker(map, getContext(), invMan);
+            t.setMarker(map, getContext());
             t.setReward(new Item("Leaf", R.drawable.ic_leaf));
         }
     }

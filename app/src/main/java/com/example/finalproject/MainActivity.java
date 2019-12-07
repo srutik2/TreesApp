@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements InventoryManager {
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
             public void onNothingSelected(final AdapterView<?> adapterView) { }
         });
         setUpInventory();
+        setUpList("targetData.txt");
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -102,12 +104,14 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
             //splits each line into parts, fills corresponding list.
             String thisLine;
             while ((thisLine = br.readLine()) != null) {
-                List<String> splitLine = Arrays.asList(thisLine.split("\\+_\\+"));
+                List<String> splitLine = new ArrayList<>();
+                Collections.addAll(splitLine, thisLine.split("\\+_\\+"));
                 if (source.equals("targetData.txt")) {
-                    allTargets.add(new Target(splitLine));
+                    allTargets.add(new Target(splitLine, getAllItems()));
                 }
                 if (source.equals("itemInfo.txt")) {
-                    allItems.add(new Item(splitLine));
+                    int icon = findIconByName(splitLine.remove(splitLine.size() - 1));
+                    allItems.add(new Item(splitLine, icon));
                 }
             }
         } catch (IOException e) {
@@ -116,11 +120,28 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         }
     }
 
+    /**Find the R.drawable id of an icon by name.
+     * returns alert icon by default.
+     * @param name the name of the icon to find.
+     * @return the R.drawable id of the chosen icon. */
+    public int findIconByName(final String name) {
+        String iconName = "ic_" + name;
+        int resId = getResources().getIdentifier(iconName, "drawable", getPackageName());
+        if (resId == 0) {
+            System.out.println("alert! icon name not found!");
+            return R.drawable.ic_alert;
+        }
+        System.out.println("Icon id: " + resId);
+        return resId;
+    }
+
     /**Gets a list of all of the items for use elsewhere.
      * @return the current inventory as a List<Item> */
     @Override
     public List<Item> getAllItems() {
-        setUpList("itemInfo.txt");
+        if (allItems.isEmpty()) {
+            setUpList("itemInfo.txt");
+        }
         return allItems;
     }
 
@@ -128,7 +149,9 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
      * @return the current inventory as a List<Target> */
     @Override
     public List<Target> getAllTargets() {
-        setUpList("targetData.txt");
+        if (allTargets.isEmpty()) {
+            setUpList("targetData.txt");
+        }
         return allTargets;
     }
 
@@ -157,6 +180,6 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         invContents.add(new Item("Inventory", R.drawable.ic_inventory));
         invContents.add(new Item("Ice Cream", R.drawable.ic_ice_cream));
         invContents.add(new Item("Pineapple", 13, R.drawable.ic_pineapple));
-        invContents.add(new Item("Book", 147, R.drawable.ic_info_black_24dp));
+        invContents.add(new Item("Book", 147, R.drawable.ic_info));
     }
 }

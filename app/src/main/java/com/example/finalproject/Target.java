@@ -49,19 +49,43 @@ public class Target {
      * Format: name, locDesc, desc, snippet, location, reward
      * For now, I will assume the icon and color will be the same.
      * The reward will be a string, item object will have to be found from that.
-     * @param allInfo a string[] info to store. */
-    public Target(final List allInfo) {
-        //Thinking about making the parameter a Linked list and using pop()
-        if (allInfo == null) {
-            return;
+     * @param info a string[] info to store.
+     * @param everyItem a list of all items, in which to find reward.*/
+    public Target(final List<String> info, final List<Item> everyItem) {
+        name = info.get(0);
+        locationDescription = info.get(1);
+        description = info.get(2);
+        int num = 2 + 1; //getting around checkstyle, using num for indices 3, 4, and 5.
+        snippet = info.get(num);
+        location = getLatLng(info.get(++num));
+        try {
+            reward = findItemByName(info.get(++num), everyItem);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(info.get(num) + " was not found");
+            System.out.println(everyItem);
+            ex.printStackTrace();
         }
-        name = allInfo.get(0).toString();
-        if (allInfo.get(1) != null) {
-            locationDescription = allInfo.get(1).toString();
+    }
+
+    /**@param itemName LatLng coordinate as a String "lat,lng".
+     * @param items List<> of all items to search.
+     * @return the item whose name is passed in. */
+    private Item findItemByName(final String itemName, final List<Item> items) {
+        for (Item i : items) {
+            if (i.getName().equals(itemName)) {
+                return i;
+            }
         }
-        if (allInfo.get(2) != null) {
-            description = allInfo.get(2).toString();
-        }
+        System.out.println("Reward Item does not exist.");
+        throw new IllegalArgumentException();
+    }
+
+    /**@param coords LatLng coordinate as a String "lat,lng"
+     * @return a latlng object that is the same as the string. */
+    private LatLng getLatLng(final String coords) {
+        String[] each = coords.split(",");
+        each[1] = each[1].trim(); //just in case
+        return new LatLng(Double.parseDouble(each[0]), Double.parseDouble(each[1]));
     }
 
     /**Creates a target with lots of info.
@@ -113,10 +137,8 @@ public class Target {
      * reulting marker is stored for future use in a global variable.
      * @param map map on which to draw marker.
      * @param context passed directly to vectorToBitmap() to get resources.
-     * @param im an InventoryManager which is used to give the player the reward Item.
      */
-    public void setMarker(final GoogleMap map, final Context context, final InventoryManager im) {
-        invMan = im;
+    public void setMarker(final GoogleMap map, final Context context) {
         MarkerOptions options = new MarkerOptions();
         options.position(location).title(name);
         if (snippet != null && !(snippet.equals(""))) {

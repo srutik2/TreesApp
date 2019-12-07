@@ -35,19 +35,20 @@ public class Item {
     }
 
     /**Used to create an item used in the info page.
-     * @param allInfo a String[] containing name, location, and description.
+     * will update soon to include other parameters.
+     * format: name, locDesc, desc, iconName
+     * @param allInfo a String[] containing attributes.
+     * @param itemIcon R.drawable id for the icon.
      */
-    public Item(final List allInfo) {
+    public Item(final List<String> allInfo, final int itemIcon) {
         if (allInfo == null) {
             return;
         }
-        name = allInfo.get(0).toString();
-        if (allInfo.get(1) != null) {
-            locationDescription = allInfo.get(1).toString();
-        }
-        if (allInfo.get(2) != null) {
-            description = allInfo.get(2).toString();
-        }
+        int i = -1;
+        name = allInfo.get(++i);
+        locationDescription = allInfo.get(++i);
+        description = allInfo.get(++i);
+        icon = itemIcon;
     }
 
     /** Two items are equal if they have the same name and icon.
@@ -84,12 +85,12 @@ public class Item {
     }
 
     /**@return the quantity. */
-    int getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
     /**@return the id of the R.drawable file with this icon. */
-    int getImageResource() {
+    public int getImageResource() {
         return icon;
     }
 
@@ -99,8 +100,9 @@ public class Item {
         System.out.println("quantity increased to " + quantity);
     }
 
-    /**Set the color of the icon. */
-    public void setColor(final String color) {
-        //set the icon color manually.
+    /**Set the color of the icon.
+     * @param setColor new color for icon. */
+    public void setColor(final String setColor) {
+        //change icon color manually.
     }
 }

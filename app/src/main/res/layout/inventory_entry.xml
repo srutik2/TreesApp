@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/inventory_item_content_description"
         android:padding="5dp"
-        android:src="@drawable/ic_info_black_24dp" />
+        android:src="@drawable/ic_info" />
 
     <TextView
         android:id="@+id/itemName"
