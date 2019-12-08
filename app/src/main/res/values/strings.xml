@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Treesapp</string>
+    <string name="service_name">Treesapp Location Listener Service.</string>
+    <string name="notification_text">Tracking location because you\'re in a game</string>
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
     <string name="title_info">Information</string>
@@ -19,4 +21,5 @@
     <string name="slider_info_items">Item Information Page</string>
     <string name="inventory_item_content_description">Contains an image and a text view. Intended to show the name and a small representation of an item in the inventory.</string>
     <string name="item_icon_content_description">Contains the item icon</string>
+    <string name="inventory_sell_content_description">Button to sell an item.</string>
 </resources>

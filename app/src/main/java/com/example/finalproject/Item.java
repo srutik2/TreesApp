@@ -15,6 +15,9 @@ public class Item {
     /**Item description used in info page. */
     private String description;
 
+    /**Value of the the item when sold. default value is 1. Can change constructor later. */
+    private int value = 1;
+
 //    /**Used to make a new inventory entry.
 //     * @param setName display name.
 //     * @param amount quantity to start with in inventory.
@@ -98,12 +101,26 @@ public class Item {
     /**Increase the quantity by one. */
     void increment() {
         quantity++;
-        System.out.println("quantity increased to " + quantity);
+    }
+
+    /**Decrease the quantity by one. */
+    void decrement() {
+        quantity--;
+    }
+
+    /**@param amt amount to add to quantity. */
+    public void add(final int amt) {
+        quantity += amt;
     }
 
     /**Set the color of the icon.
      * @param setColor new color for icon. */
     public void setColor(final String setColor) {
         //change icon color manually.
+    }
+
+    /**@return the value of the Item. */
+    public int getValue() {
+        return value;
     }
 }

@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
     /** ArrayList to store items in inventory. */
     private ArrayList<Item> invContents = new ArrayList<>();
 
+    /** ArrayList to store items in inventory. */
+    private InventoryAdapter adapter;
+
     /**Sets up the navigation fragment and inventory.
      * @param savedInstanceState I want to know what this does. */
     @Override
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
             }
         });
 
-        InventoryAdapter adapter = new InventoryAdapter(this, R.layout.inventory_entry, invContents);
+        adapter = new InventoryAdapter(this, R.layout.inventory_entry, invContents, this);
         adapter.setDropDownViewResource(R.layout.inventory_entry);
 
         inventory.setAdapter(adapter);
@@ -169,6 +172,19 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         }
     }
 
+    @Override
+    public void sell(final Item item) {
+        System.out.println("sell: " + item.getName());
+        //add the value of the item sold to the amount of money (inv at 1).
+        invContents.get(1).add(item.getValue());
+        //remove 1 item from inventory. delete it if there are 0.
+        item.decrement();
+        if (item.getQuantity() <= 0) {
+            invContents.remove(item);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
     /** finds an item from the inventory and returns it.
      * @param itemName item to be found.
      * @return the item with the given name. */
@@ -192,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
      *Eventually just the first line will be kept. */
     private void setUpInventory() {
         invContents.add(new Item(new ArrayList<>(Arrays.asList("Inventory", " ", " ", "1")), R.drawable.ic_inventory));
+        invContents.add(new Item(new ArrayList<>(Arrays.asList("Cash Money", " ", " ", "0")), R.drawable.ic_coin));
         for (Item i : allItems) {
             if (i.getQuantity() != 0) {
                 invContents.add(i);

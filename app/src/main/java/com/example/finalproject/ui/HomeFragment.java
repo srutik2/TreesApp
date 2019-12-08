@@ -13,11 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.example.finalproject.InventoryManager;
 import com.example.finalproject.Item;
 import com.example.finalproject.R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.jetbrains.annotations.NotNull;
 
 public class HomeFragment extends Fragment {

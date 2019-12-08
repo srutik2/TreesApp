@@ -16,6 +16,10 @@ public interface InventoryManager {
      * @param item item to be added to the inventory. */
     void addToInventory(Item item);
 
+    /** adds an item to the inventory in MainActivity.
+     * @param item item to be added to the inventory. */
+    void sell(Item item);
+
     /** finds an item from the inventory and returns it.
      * @param itemName item to be found.
      * @return the item with the given name. */
