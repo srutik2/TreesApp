@@ -31,7 +31,7 @@ public class Target {
     private String description;
 
     /**The R.drawable id which represents the icon to represent the Target. */
-    private int icon;
+    private int icon = R.drawable.ic_pine_tree;
     /**LatLng object that represents the Target's location. */
     private LatLng location;
     /**An int representing the color of the Target. Darkish green by default. */
@@ -42,8 +42,6 @@ public class Target {
 
     /**Item given as a reward by the target. */
     private Item reward;
-    /**An Inventory Manager implemented by MainActivity.*/
-    private InventoryManager invMan;
 
     /** adds info about the Target.
      * Format: name, locDesc, desc, snippet, location, reward
@@ -72,7 +70,7 @@ public class Target {
      * @return the item whose name is passed in. */
     private Item findItemByName(final String itemName, final List<Item> items) {
         for (Item i : items) {
-            if (i.getName().equals(itemName)) {
+            if (i.getName().equalsIgnoreCase(itemName)) {
                 return i;
             }
         }
@@ -86,51 +84,6 @@ public class Target {
         String[] each = coords.split(",");
         each[1] = each[1].trim(); //just in case
         return new LatLng(Double.parseDouble(each[0]), Double.parseDouble(each[1]));
-    }
-
-    /**Creates a target with lots of info.
-     * @param setLocation location on the map.
-     * @param setName name to be displayed
-     * @param addSnippet snippet displayed under name.
-     * @param setIcon R.drawable id to represent Target on map.
-     * @param setColor color of target on map. */
-    public Target(final LatLng setLocation, final String setName, final String addSnippet, final int setIcon, final String setColor) {
-        location = setLocation;
-        name = setName;
-        snippet = addSnippet;
-        icon = setIcon;
-        color = Color.parseColor(setColor);
-    }
-
-    /**Constructor that uses default color.
-     * @param setLocation location on map.
-     * @param setName display name.
-     * @param addSnippet under name.
-     * @param setIcon R.drawable id. */
-    public Target(final LatLng setLocation, final String setName, final String addSnippet, final int setIcon) {
-        location = setLocation;
-        name = setName;
-        snippet = addSnippet;
-        icon = setIcon;
-    }
-
-    /** Target with default icon.
-     * @param setLocation location on map.
-     * @param setName display name.
-     * @param addSnippet description. */
-    public Target(final LatLng setLocation, final String setName, final String addSnippet) {
-        location = setLocation;
-        name = setName;
-        snippet = addSnippet;
-    }
-
-    /** basic constructor for map.
-     * @param setLocation map location.
-     * @param setName display name.
-     */
-    public Target(final LatLng setLocation, final String setName) {
-        location = setLocation;
-        name = setName;
     }
 
     /**creates a marker on the given map using what fields exist.
@@ -201,8 +154,7 @@ public class Target {
     }
 
     /**Put the reward associated with this target in the player's inventory. */
-    public void reward() {
-        System.out.println(reward.getName());
-        invMan.addToInventory(reward);
+    public Item reward() {
+        return reward;
     }
 }

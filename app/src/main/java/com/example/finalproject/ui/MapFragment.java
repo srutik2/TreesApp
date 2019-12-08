@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MapFragment extends Fragment {
@@ -80,12 +81,13 @@ public class MapFragment extends Fragment {
                     CameraPosition camPos = CameraPosition.builder().target(CAM_CENTER).zoom(ZOOM).bearing(0).build();
                     map.animateCamera(CameraUpdateFactory.newCameraPosition(camPos), ZOOM_DUR, null);
 
-                    createExampleMarkers();
+                    createMarkers();
 
                     map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(final Marker marker) {
                             reward(marker);
+                            //said false by default, if stuff starts breaking, change back.
                             return false;
                         }
                     });
@@ -103,20 +105,16 @@ public class MapFragment extends Fragment {
         for (Target t : targets) {
             if (t.getMarker().equals(marker)) {
                 System.out.println(t.getName());
-                t.reward();
+                invMan.addToInventory(t.reward());
             }
         }
     }
 
     /** sets up some example markers for testing. Will be removed. */
-    private void createExampleMarkers() {
-
-        //add a constructor that takes the reward item soon.
-        targets.add(new Target(new LatLng(40.109760, -88.228156), "Douglas-Fir", "Pseudotsuga menziesii", R.drawable.ic_pine_tree, "#008577"));
-        targets.add(new Target(new LatLng(40.108827, -88.227979), "Eastern White Pine", "Pinus strobus", R.drawable.ic_pine_tree, "#008577"));
+    private void createMarkers() {
+        targets = invMan.getAllTargets();
         for (Target t : targets) {
             t.setMarker(map, getContext());
-            t.setReward(new Item("Leaf", R.drawable.ic_leaf));
         }
     }
 

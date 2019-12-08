@@ -15,24 +15,24 @@ public class Item {
     /**Item description used in info page. */
     private String description;
 
-    /**Used to make a new inventory entry.
-     * @param setName display name.
-     * @param amount quantity to start with in inventory.
-     * @param setIcon display icon id. */
-    public Item(final String setName, final int amount, final int setIcon) {
-        name = setName;
-        quantity = amount;
-        icon = setIcon;
-    }
+//    /**Used to make a new inventory entry.
+//     * @param setName display name.
+//     * @param amount quantity to start with in inventory.
+//     * @param setIcon display icon id. */
+//    public Item(final String setName, final int amount, final int setIcon) {
+//        name = setName;
+//        quantity = amount;
+//        icon = setIcon;
+//    }
 
-    /**Used to make a new inventory entry with a default 1 quantity..
-     * @param setName display name.
-     * @param setIcon display icon id. */
-    public Item(final String setName, final int setIcon) {
-        name = setName;
-        icon = setIcon;
-        quantity = 1;
-    }
+//    /**Used to make a new inventory entry with a default 1 quantity..
+//     * @param setName display name.
+//     * @param setIcon display icon id. */
+//    public Item(final String setName, final int setIcon) {
+//        name = setName;
+//        icon = setIcon;
+//        quantity = 1;
+//    }
 
     /**Used to create an item used in the info page.
      * will update soon to include other parameters.
@@ -48,6 +48,7 @@ public class Item {
         name = allInfo.get(++i);
         locationDescription = allInfo.get(++i);
         description = allInfo.get(++i);
+        quantity = Integer.parseInt(allInfo.get(++i));
         icon = itemIcon;
     }
 
@@ -85,7 +86,7 @@ public class Item {
     }
 
     /**@return the quantity. */
-    public int getQuantity() {
+    int getQuantity() {
         return quantity;
     }
 
@@ -95,7 +96,7 @@ public class Item {
     }
 
     /**Increase the quantity by one. */
-    public void increment() {
+    void increment() {
         quantity++;
         System.out.println("quantity increased to " + quantity);
     }

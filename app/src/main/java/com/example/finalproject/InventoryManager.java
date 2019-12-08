@@ -16,6 +16,11 @@ public interface InventoryManager {
      * @param item item to be added to the inventory. */
     void addToInventory(Item item);
 
+    /** finds an item from the inventory and returns it.
+     * @param itemName item to be found.
+     * @return the item with the given name. */
+    Item getItem(String itemName);
+
     /** gets the inventory when it is needed in another class.
      * @return the current inventory as a List<Item> */
     List<Item> getInventory();

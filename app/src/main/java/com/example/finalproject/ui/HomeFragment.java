@@ -14,6 +14,8 @@ import com.example.finalproject.InventoryManager;
 import com.example.finalproject.Item;
 import com.example.finalproject.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public class HomeFragment extends Fragment {
 
     /**An Inventory Manager implemented by MainActivity.*/
-    private InventoryManager inventoryManager;
+    private InventoryManager invMan;
 
     /**Runs when this view is created by te navigation manager.
      * @param inflater Inflater allows inflation of root to get views from fragment_home xml.
@@ -37,13 +39,12 @@ public class HomeFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Item tree = new Item("tree", 1, R.drawable.ic_pine_tree);
-                List<Item> inv = inventoryManager.getInventory();
-                if (inv.contains(tree)) {
-                    tree = inv.get(inv.indexOf(tree));
-                    tree.increment();
-                } else {
-                    inventoryManager.addToInventory(tree);
+                //In the future, I want to make a list of everything at the beginning, and then just change the amt here.
+                try {
+                    Item tree = invMan.getItem("tree");
+                    invMan.addToInventory(tree);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment {
     public void onAttach(@NotNull final Context context) {
         super.onAttach(context);
         try {
-            inventoryManager = (InventoryManager) context;
+            invMan = (InventoryManager) context;
         } catch (ClassCastException castException) {
             System.out.println("The activity does not implement the listener.");
             castException.printStackTrace();

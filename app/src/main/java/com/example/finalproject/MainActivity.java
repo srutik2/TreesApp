@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
             @Override
             public void onNothingSelected(final AdapterView<?> adapterView) { }
         });
-        setUpInventory();
         setUpList("targetData.txt");
+        setUpInventory();
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -160,12 +160,26 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
     @Override
     public void addToInventory(final Item item) {
         if (invContents.contains(item)) {
-            System.out.println("increment " + item.getName());
             item.increment();
+            System.out.println("increment " + item.getName());
         } else {
+            item.increment();
             System.out.println("add new " + item.getName());
             invContents.add(item);
         }
+    }
+
+    /** finds an item from the inventory and returns it.
+     * @param itemName item to be found.
+     * @return the item with the given name. */
+    @Override
+    public Item getItem(final String itemName) throws IllegalArgumentException {
+        for (Item i : allItems) {
+            if (i.getName().equalsIgnoreCase(itemName)) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException();
     }
 
     /**@return a List of items in the inventory. */
@@ -177,9 +191,11 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
     /**Fills the inventory with example items.
      *Eventually just the first line will be kept. */
     private void setUpInventory() {
-        invContents.add(new Item("Inventory", R.drawable.ic_inventory));
-        invContents.add(new Item("Ice Cream", R.drawable.ic_ice_cream));
-        invContents.add(new Item("Pineapple", 13, R.drawable.ic_pineapple));
-        invContents.add(new Item("Book", 147, R.drawable.ic_info));
+        invContents.add(new Item(new ArrayList<>(Arrays.asList("Inventory", " ", " ", "1")), R.drawable.ic_inventory));
+        for (Item i : allItems) {
+            if (i.getQuantity() != 0) {
+                invContents.add(i);
+            }
+        }
     }
 }
