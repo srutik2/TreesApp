@@ -12,7 +12,7 @@
         android:layout_marginTop="96dp"
         android:text="@string/target_page_welcome"
         android:textAlignment="center"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/targetOptions" />
@@ -56,7 +56,7 @@
         android:layout_marginBottom="128dp"
         android:background="@color/primaryBackground"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/targetLocDesc">
 
@@ -130,27 +131,15 @@
                     android:text="@string/target_desc"
                     android:textStyle="bold" />
 
-                <ScrollView
+                <TextView
+                    android:id="@+id/targetInfoDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/targetInfoDescription"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="48dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="16dp"
-                            android:text="@string/example_target_description" />
-                    </LinearLayout>
-                </ScrollView>
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/example_target_description" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
