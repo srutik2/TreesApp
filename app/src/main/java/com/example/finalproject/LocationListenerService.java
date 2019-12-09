@@ -118,7 +118,7 @@ public final class LocationListenerService extends Service {
                 .setOngoing(true)
                 .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
                 .setContentText(getResources().getString(R.string.notification_text))
-                .setSmallIcon(R.drawable.ic_alert);
+                .setSmallIcon(R.drawable.ic_pine_tree);
         startForeground(NOTIFICATION_ID, builder.build());
         try {
             locationClient.requestLocationUpdates(LOCATION_REQUEST, locationCallback, Looper.myLooper());

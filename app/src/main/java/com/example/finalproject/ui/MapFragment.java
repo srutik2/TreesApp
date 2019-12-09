@@ -46,6 +46,10 @@ public class MapFragment extends Fragment {
     /**Map object that fills the fragment. */
     private GoogleMap map;
 
+    private List<Marker> inRange = new ArrayList<>();
+
+    private final int PROXIMITY_THRESHOLD = 10;
+
     /**LatLng pos where camera centers itself (center of main quad).
      * Thinking about changing to user's current location. */
     private static final LatLng CAM_CENTER = new LatLng(40.107551, -88.227277);
@@ -227,6 +231,18 @@ public class MapFragment extends Fragment {
     /**Called when location is updated.
      *@param location the location from update. */
     private void updateLocation(final Location location) {
+        inRange.clear();
+        for (Target t : targets) {
+            Marker m = t.getMarker();
+            final double latConst = 111036.5275;
+            final double lonConst = 85269.1285;
+            double h = (location.getLatitude() - m.getPosition().latitude) * latConst;
+            double w = (location.getLongitude() - m.getPosition().longitude) * lonConst;
+            double d = Math.sqrt(Math.pow(h, 2) + Math.pow(w, 2));
+            if (d <= PROXIMITY_THRESHOLD) {
+                inRange.add(m);
+            }
+        }
 
     }
 
