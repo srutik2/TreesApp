@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
 
     /** ArrayList to store all Targets. */
     private ArrayList<Target> allTargets = new ArrayList<>();
-
     /** ArrayList to store items in inventory. */
     private ArrayList<Item> invContents = new ArrayList<>();
 
