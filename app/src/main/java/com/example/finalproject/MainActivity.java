@@ -1,9 +1,12 @@
 package com.example.finalproject;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
 
     /** ArrayList to store items in inventory. */
     private InventoryAdapter adapter;
+
+    /**Media Player for background music. */
+    private MediaPlayer player;
 
     /**Sets up the navigation fragment and inventory.
      * @param savedInstanceState I want to know what this does. */
@@ -76,6 +82,22 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         setUpList("targetData.txt");
         setUpInventory();
 
+        if (player != null) {
+            System.out.println("player still exists!");
+        }
+        Switch playMusic = findViewById(R.id.musicPlayer);
+        playMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
+                if (b) {
+                    startPlayer();
+                } else {
+                    stopPlayer();
+                }
+            }
+        });
+        playMusic.setChecked(true);
+
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull final NavController controller, @NonNull final NavDestination destination, @Nullable final Bundle arguments) {
@@ -92,6 +114,33 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         adapter.setDropDownViewResource(R.layout.inventory_entry);
 
         inventory.setAdapter(adapter);
+    }
+
+    private void startPlayer() {
+        if (player == null) {
+            player = MediaPlayer.create(getApplicationContext(), R.raw.background);
+        }
+        player.start();
+        player.setLooping(true);
+    }
+
+    private void stopPlayer() {
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopPlayer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopPlayer();
     }
 
     /**Takes a filename and sets up the list whose values are stored inside.

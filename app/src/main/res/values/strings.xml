@@ -22,4 +22,5 @@
     <string name="inventory_item_content_description">Contains an image and a text view. Intended to show the name and a small representation of an item in the inventory.</string>
     <string name="item_icon_content_description">Contains the item icon</string>
     <string name="inventory_sell_content_description">Button to sell an item.</string>
+    <string name="music_title">Music</string>
 </resources>

@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     android:background="@color/primaryBackground">
 
+    <Switch
+        android:id="@+id/musicPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/musicTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/music_title"
+        app:layout_constraintStart_toStartOf="@+id/musicPlayer"
+        app:layout_constraintTop_toBottomOf="@+id/musicPlayer" />
+
     <Spinner
         android:id="@+id/inventory"
         android:layout_width="300dp"
@@ -15,7 +33,7 @@
         android:contentDescription="@string/app_name"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/musicPlayer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
