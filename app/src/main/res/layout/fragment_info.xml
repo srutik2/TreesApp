@@ -62,51 +62,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/targetInfoName"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/targetPositionContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="128dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="0dp"
-            android:text="@string/example_name"
-            android:textStyle="bold" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/targetInfoLocationDescrpitionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="72dp"
-            android:text="@string/target_location_desc"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/targetInfoName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="96dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="64dp"
+                android:text="@string/example_name"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/targetInfoLocationDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/example_target_location_description" />
+            <LinearLayout
+                android:id="@+id/targetLocDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/targetInfoName">
 
-        <TextView
-            android:id="@+id/targetInfoDescrpitionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="72dp"
-            android:text="@string/target_desc"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/targetInfoLocationDescrpitionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/target_location_desc"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/targetInfoDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/example_target_description" />
+                <TextView
+                    android:id="@+id/targetInfoLocationDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/example_target_location_description" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/targetDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/targetLocDesc">
+
+                <TextView
+                    android:id="@+id/targetInfoDescrpitionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/target_desc"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/targetInfoDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/example_target_description" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -125,67 +160,99 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/itemTitleBar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/itemInfoPositioner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/itemIcon"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:contentDescription="@string/item_icon_content_description"
-                android:src="@drawable/ic_alert" />
-
-            <TextView
-                android:id="@+id/itemInfoName"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/itemTitleBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="48dp"
-                android:text="@string/example_name"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/itemInfoLocationDescriptionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="72dp"
-            android:text="@string/item_location_desc"
-            android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/itemIcon"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:contentDescription="@string/item_icon_content_description"
+                    android:src="@drawable/ic_alert" />
 
-        <TextView
-            android:id="@+id/itemInfoLocationDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/example_item_location_description" />
+                <TextView
+                    android:id="@+id/itemInfoName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/example_name"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/itemInfoDescrpitionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="72dp"
-            android:text="@string/item_desc"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/itemLocDescContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/itemTitleBar">
 
-        <TextView
-            android:id="@+id/itemInfoDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/example_item_description" />
+                <TextView
+                    android:id="@+id/itemInfoLocationDescriptionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/item_location_desc"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/itemInfoLocationDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/example_item_location_description" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/itemDescContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/itemLocDescContainer">
+
+                <TextView
+                    android:id="@+id/itemInfoDescrpitionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/item_desc"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/itemInfoDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/example_item_description" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
     <SeekBar

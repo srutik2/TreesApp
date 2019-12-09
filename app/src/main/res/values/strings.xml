@@ -1,26 +1,39 @@
 <resources>
+    <!-->These are general app-related strings. </!-->
     <string name="app_name">Treesapp</string>
     <string name="service_name">Treesapp Location Listener Service.</string>
     <string name="notification_text">Tracking location because you\'re in a game</string>
-    <string name="title_home">Home</string>
+    <string name="music_title">Music</string>
     <string name="title_map">Map</string>
+
+    <!-->These are for the Information Page. </!-->
     <string name="title_info">Information</string>
     <string name="target_location_desc">Where to find this target:</string>
     <string name="item_location_desc">Where to get this item:</string>
     <string name="target_desc">Target Description:</string>
     <string name="item_desc">Item Description:</string>
+    <string name="target_page_welcome">Welcome to the Info Panel!\n\nThis is where you will find information on\nTargets and Items in the game.</string>
+    <!-->Example text for info page. </!-->
     <string name="example_name">Name goes here</string>
     <string name="example_target_location_description">On the Southwest corner of Street one and Street two, next to that one landmark that is nearby</string>
     <string name="example_item_location_description">This item can be found here and there, also at that one target.</string>
     <string name="example_target_description">Fairly complete description of this target, which should give some interesting information about the target\'s history and importance.</string>
     <string name="example_item_description">This is an interesting item that comes from a cool place. It is useful for various things, such as contributing to gameplay.</string>
-    <string name="target_page_welcome">Welcome to the Info Panel!\n\nThis is where you will find information on\nTargets and Items in the game.</string>
+    <!-->Specifically for the slider on the info page. </!-->
     <string name="slider_info_default">To start, move the slider to a new page.</string>
     <string name="slider_info_error">Uh Oh! Cannot find slider position.</string>
     <string name="slider_info_targets">Target Information Page</string>
     <string name="slider_info_items">Item Information Page</string>
+
+    <!-->Content descriptions for the inventory system. </!-->
     <string name="inventory_item_content_description">Contains an image and a text view. Intended to show the name and a small representation of an item in the inventory.</string>
     <string name="item_icon_content_description">Contains the item icon</string>
     <string name="inventory_sell_content_description">Button to sell an item.</string>
-    <string name="music_title">Music</string>
+
+    <!-->Strings for the home page</!-->
+    <string name="title_home">Home</string>
+    <string name="instruction_title">Instructions:</string>
+    <string name="instructions_1">Treesapp is a game embedded within the grounds of the University of Illinois Urbana-Champaign. This is an exciting quest that combines the fun of walking around campus with a simple way of learning more about the interesting trees on campus. </string>
+    <string name="instructions_2">Players in the game of Treesapp must travel around the UIUC campus to find specific rewards located within certain trees on campus. Each item found will be a trinket worth collecting, as it will possess a value for players to sell or display; In order to collect the trinket, players must complete a certain task at the location on campus. </string>
+    <string name="glhf">GLHF!</string>
 </resources>

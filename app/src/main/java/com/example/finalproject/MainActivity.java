@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
 
     /**Media Player for background music. */
     private MediaPlayer player;
+    /**volume for background music (L and R same). */
+    private final int VOL = 20;
 
     /**Sets up the navigation fragment and inventory.
      * @param savedInstanceState I want to know what this does. */
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
                 }
             }
         });
-        playMusic.setChecked(true);
+        //playMusic.setChecked(true);
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -115,14 +117,17 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         inventory.setAdapter(adapter);
     }
 
+    /**Create a new MediaPlayer with background music. */
     private void startPlayer() {
         if (player == null) {
             player = MediaPlayer.create(getApplicationContext(), R.raw.background);
         }
         player.start();
+        player.setVolume(VOL, VOL);
         player.setLooping(true);
     }
 
+    /**Release the player and set it to null. */
     private void stopPlayer() {
         if (player != null) {
             player.release();
@@ -130,12 +135,14 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         }
     }
 
+    /**When the player stops, end everything. */
     @Override
     protected void onStop() {
         super.onStop();
         stopPlayer();
     }
 
+    /**Make sure you stop the player when the app closes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
