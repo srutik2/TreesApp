@@ -13,6 +13,7 @@
     <string name="target_desc">Target Description:</string>
     <string name="item_desc">Item Description:</string>
     <string name="target_page_welcome">Welcome to the Info Panel!\n\nThis is where you will find information on\nTargets and Items in the game.</string>
+    <string name="icon_content_description">Contains an icon for the target or item represented</string>
     <!-->Example text for info page. </!-->
     <string name="example_name">Name goes here</string>
     <string name="example_target_location_description">On the Southwest corner of Street one and Street two, next to that one landmark that is nearby</string>
@@ -27,7 +28,6 @@
 
     <!-->Content descriptions for the inventory system. </!-->
     <string name="inventory_item_content_description">Contains an image and a text view. Intended to show the name and a small representation of an item in the inventory.</string>
-    <string name="item_icon_content_description">Contains the item icon</string>
     <string name="inventory_sell_content_description">Button to sell an item.</string>
 
     <!-->Strings for the home page</!-->

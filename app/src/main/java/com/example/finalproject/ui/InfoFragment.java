@@ -162,10 +162,12 @@ public class InfoFragment extends Fragment {
         TextView location = root.findViewById(R.id.targetInfoLocationDescription);
         TextView description = root.findViewById(R.id.targetInfoDescription);
         TextView name = root.findViewById(R.id.targetInfoName);
+        ImageView targetIcon = root.findViewById(R.id.targetIcon);
 
         name.setText(targets.get(position).getName());
         location.setText(targets.get(position).getLocationDescription());
         description.setText(targets.get(position).getDescription());
+        targetIcon.setImageResource(R.drawable.ic_pine_tree);
         infoPanel.setVisibility(View.VISIBLE);
     }
 

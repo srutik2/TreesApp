@@ -1,6 +1,12 @@
 package com.example.finalproject;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Item {
 
@@ -18,24 +24,10 @@ public class Item {
     /**Value of the the item when sold. default value is 1. Can change constructor later. */
     private int value = 1;
 
-//    /**Used to make a new inventory entry.
-//     * @param setName display name.
-//     * @param amount quantity to start with in inventory.
-//     * @param setIcon display icon id. */
-//    public Item(final String setName, final int amount, final int setIcon) {
-//        name = setName;
-//        quantity = amount;
-//        icon = setIcon;
-//    }
-
-//    /**Used to make a new inventory entry with a default 1 quantity..
-//     * @param setName display name.
-//     * @param setIcon display icon id. */
-//    public Item(final String setName, final int setIcon) {
-//        name = setName;
-//        icon = setIcon;
-//        quantity = 1;
-//    }
+    /** A list of Item names that pluralize oddly. */
+    private final static Map<String, String> pluralName = new HashMap<String, String>(){{
+        put("Leaf", "Leaves");
+    }};
 
     /**Used to create an item used in the info page.
      * will update soon to include other parameters.
@@ -64,6 +56,19 @@ public class Item {
         }
         Item item = (Item) other;
         return name.equals(item.getName()) && icon == item.getImageResource();
+    }
+
+    /**@return the item as a string representing name and amount. */
+    @NotNull
+    @Override
+    public String toString() {
+        if (quantity == 1) {
+            return name;
+        }
+        if (pluralName.containsKey(name)) {
+            return "" + quantity + " " + pluralName.get(name);
+        }
+        return "" + quantity + " " + name + "s";
     }
 
     /**@return the hashCode based on the super implementation.

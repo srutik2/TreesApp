@@ -20,9 +20,12 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,10 +86,8 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         setUpList("targetData.txt");
         setUpInventory();
 
-        if (player != null) {
-            System.out.println("player still exists!");
-        }
         Switch playMusic = findViewById(R.id.musicPlayer);
+        playMusic.setChecked(false);
         playMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
                 }
             }
         });
-        //playMusic.setChecked(true);
+        playMusic.setChecked(false);
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -139,7 +140,9 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
     @Override
     protected void onStop() {
         super.onStop();
-        stopPlayer();
+        if (player != null) {
+            player.pause();
+        }
     }
 
     /**Make sure you stop the player when the app closes. */
@@ -257,6 +260,41 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
     @Override
     public List<Item> getInventory() {
         return invContents;
+    }
+
+    /** gets the inventory when it is needed in another class.
+     * @param item the item whos quantity is changing.
+     * @param amt the amount the item is changing by */
+    public void writeChange(final Item item, final int amt) {
+        /*
+        Not sure how to do ths yet, My ideas so far:
+            For each line, replace that line with itself, edited if necessary.
+            find exactly where to edit, make changes.
+            make a file that contains a list of numbers, each corresponding with the # of that item.
+                if I do this, it would lead well into FireBase Auth, and accounts.
+                *
+        OutputStream os;
+        BufferedWriter br;
+        try {
+            //creates buffered reader to read each line of the source file.
+            os = this.getAssets().open("writingTest.txt");
+            br = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+
+            //splits each line into parts, fills corresponding list.
+            String thisLine;
+            while ((thisLine = br.readLine()) != null) {
+                List<String> splitLine = new ArrayList<>();
+                Collections.addAll(splitLine, thisLine.split("\\+_\\+"));
+                //find correct line and update it.
+                if (splitLine.get(0).equals(item.getName())) {
+
+                }
+            }
+        } catch (IOException e) {
+            //something went wrong, likely in getting the file.
+            e.printStackTrace();
+        }
+        */
     }
 
     /**Fills the inventory with example items.

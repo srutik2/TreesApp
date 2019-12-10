@@ -67,20 +67,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/targetInfoName"
+            <LinearLayout
+                android:id="@+id/targetTitleBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="96dp"
-                android:layout_marginTop="64dp"
-                android:layout_marginEnd="64dp"
-                android:text="@string/example_name"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textStyle="bold"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/targetIcon"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:contentDescription="@string/icon_content_description"
+                    android:src="@drawable/ic_alert" />
+
+                <TextView
+                    android:id="@+id/targetInfoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/example_name"
+                    android:textAllCaps="false"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/targetLocDesc"
@@ -90,7 +105,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/targetInfoName">
+                app:layout_constraintTop_toBottomOf="@+id/targetTitleBar">
 
                 <TextView
                     android:id="@+id/targetInfoLocationDescrpitionTitle"
@@ -171,6 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -179,7 +196,7 @@
                     android:layout_height="96dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:contentDescription="@string/item_icon_content_description"
+                    android:contentDescription="@string/icon_content_description"
                     android:src="@drawable/ic_alert" />
 
                 <TextView

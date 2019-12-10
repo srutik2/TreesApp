@@ -43,9 +43,11 @@ public class Target {
     /**Item given as a reward by the target. */
     private Item reward;
 
+
     /** adds info about the Target.
      * Format: name, locDesc, desc, snippet, location, reward
      * For now, I will assume the icon and color will be the same.
+     * In the future, I may add a which icon represents the target.
      * The reward will be a string, item object will have to be found from that.
      * @param info a string[] info to store.
      * @param everyItem a list of all items, in which to find reward.*/

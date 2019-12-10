@@ -28,4 +28,9 @@ public interface InventoryManager {
     /** gets the inventory when it is needed in another class.
      * @return the current inventory as a List<Item> */
     List<Item> getInventory();
+
+    /** gets the inventory when it is needed in another class.
+     * @param item the item whos quantity is changing.
+     * @param amt the amount the item is changing by */
+    void writeChange(Item item, int amt);
 }
