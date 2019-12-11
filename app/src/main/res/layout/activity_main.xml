@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,8 +22,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="@string/music_title"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/musicPlayer"
         app:layout_constraintTop_toBottomOf="@+id/musicPlayer" />
+
+    <Spinner
+        android:id="@+id/options"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/ic_gear"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/inventory"
@@ -33,7 +44,7 @@
         android:contentDescription="@string/app_name"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/musicPlayer"
+        app:layout_constraintStart_toEndOf="@+id/options"
         app:layout_constraintTop_toTopOf="parent" />
 
     <fragment

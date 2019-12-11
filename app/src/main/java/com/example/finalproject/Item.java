@@ -2,8 +2,6 @@ package com.example.finalproject;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +23,7 @@ public class Item {
     private int value = 1;
 
     /** A list of Item names that pluralize oddly. */
-    private final static Map<String, String> pluralName = new HashMap<String, String>(){{
+    private final Map<String, String> plural = new HashMap<String, String>() { {
         put("Leaf", "Leaves");
     }};
 
@@ -65,8 +63,8 @@ public class Item {
         if (quantity == 1) {
             return name;
         }
-        if (pluralName.containsKey(name)) {
-            return "" + quantity + " " + pluralName.get(name);
+        if (plural.containsKey(name)) {
+            return "" + quantity + " " + plural.get(name);
         }
         return "" + quantity + " " + name + "s";
     }

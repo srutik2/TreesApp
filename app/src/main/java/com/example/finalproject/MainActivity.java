@@ -20,30 +20,35 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements InventoryManager {
+public class MainActivity extends AppCompatActivity
+        implements InventoryManager, OptionsManager {
 
     /** ArrayList to store all items. */
     private ArrayList<Item> allItems = new ArrayList<>();
-
     /** ArrayList to store all Targets. */
     private ArrayList<Target> allTargets = new ArrayList<>();
     /** ArrayList to store items in inventory. */
     private ArrayList<Item> invContents = new ArrayList<>();
+    /** ArrayList to store options.
+     * To add a new option, add its name here,
+     * and functionality in OptionsAdapter.*/
+    private ArrayList<String> ops = new ArrayList<String>() { {
+        add("Music");
+    }};
 
     /** ArrayList to store items in inventory. */
-    private InventoryAdapter adapter;
+    private InventoryAdapter invAdapter;
+    /** ArrayList to store items in inventory. */
+    private OptionsAdapter opAdapter;
 
     /**Media Player for background music. */
     private MediaPlayer player;
@@ -86,19 +91,27 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         setUpList("targetData.txt");
         setUpInventory();
 
-        Switch playMusic = findViewById(R.id.musicPlayer);
-        playMusic.setChecked(false);
-        playMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
-                if (b) {
-                    startPlayer();
-                } else {
-                    stopPlayer();
-                }
-            }
-        });
-        playMusic.setChecked(false);
+        invAdapter = new InventoryAdapter(this, R.layout.inventory_entry, invContents, this);
+        invAdapter.setDropDownViewResource(R.layout.inventory_entry);
+        inventory.setAdapter(invAdapter);
+
+//        Switch playMusic = findViewById(R.id.musicPlayer);
+//        playMusic.setChecked(false);
+//        playMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
+//                if (b) {
+//                    startPlayer();
+//                } else {
+//                    stopPlayer();
+//                }
+//            }
+//        });
+
+        final Spinner options = findViewById(R.id.options);
+        opAdapter = new OptionsAdapter(this, R.layout.options_dropdown, ops, this);
+        opAdapter.setDropDownViewResource(R.layout.options_dropdown);
+        options.setAdapter(opAdapter);
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -111,15 +124,11 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
                 }
             }
         });
-
-        adapter = new InventoryAdapter(this, R.layout.inventory_entry, invContents, this);
-        adapter.setDropDownViewResource(R.layout.inventory_entry);
-
-        inventory.setAdapter(adapter);
     }
 
     /**Create a new MediaPlayer with background music. */
-    private void startPlayer() {
+    @Override
+    public void startPlayer() {
         if (player == null) {
             player = MediaPlayer.create(getApplicationContext(), R.raw.background);
         }
@@ -129,11 +138,17 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
     }
 
     /**Release the player and set it to null. */
-    private void stopPlayer() {
+    @Override
+    public void stopPlayer() {
         if (player != null) {
             player.release();
             player = null;
         }
+    }
+
+    /**@return whether the music is playing. */
+    public boolean musicPlaying() {
+        return player != null;
     }
 
     /**When the player stops, end everything. */
@@ -240,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements InventoryManager 
         if (item.getQuantity() <= 0) {
             invContents.remove(item);
         }
-        adapter.notifyDataSetChanged();
+        invAdapter.notifyDataSetChanged();
     }
 
     /** finds an item from the inventory and returns it.

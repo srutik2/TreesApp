@@ -33,11 +33,17 @@ class InventoryAdapter extends ArrayAdapter {
         items = objects;
     }
 
+    /**@return number of items. */
     @Override
     public int getCount() {
         return super.getCount();
     }
 
+    /**Sets up the spinner when closed with an item selected.
+     * @param position position in the spinner that was selected.
+     * @param convertView view of selected thing maybe.
+     * @param parent parent viewGroup.
+     * @return the view to be displayed. */
     @NotNull
     @Override
     public View getView(final int position, final View convertView, @NotNull final ViewGroup parent) {
@@ -52,6 +58,11 @@ class InventoryAdapter extends ArrayAdapter {
         return view;
     }
 
+    /**Creates a view for each member of the dropdown list.
+     * @param position position in dropdown being created.
+     * @param convertView view to be converted if it exists.
+     * @param parent parent ViewGroup.
+     * @return a view to populate the list. */
     @Override
     public View getDropDownView(final int position, final View convertView, @NotNull final ViewGroup parent) {
         View view = View.inflate(context, R.layout.inventory_dropdown_entry, null);

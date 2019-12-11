@@ -5,6 +5,8 @@
     <string name="notification_text">Tracking location because you\'re in a game</string>
     <string name="music_title">Music</string>
     <string name="title_map">Map</string>
+    <string name="settings_image_content_description">An icon for the settings list.</string>
+    <string name="default_option_swtich">Option Name</string>
 
     <!-->These are for the Information Page. </!-->
     <string name="title_info">Information</string>
