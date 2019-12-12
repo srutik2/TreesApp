@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Target {
@@ -24,11 +26,13 @@ public class Target {
     /**Name of the target. */
     private String name;
     /**More info about the Target, eg. Scientific Name (shown on marker). */
-    private String snippet;
+    private String sciName;
     /**Description of the location: used when displaying info in info page. */
     private String locationDescription;
     /**Description of the target. Used displayed on info page. */
     private String description;
+    /**Description of the target. Used displayed on info page. */
+    private final int descWordsPerLine = 8;
 
     /**The R.drawable id which represents the icon to represent the Target. */
     private int icon = R.drawable.ic_pine_tree;
@@ -39,28 +43,31 @@ public class Target {
 
     /**The marker object that represents this target object.*/
     private Marker targetMarker;
+    /**Whether or not to use Extended Snippets.*/
+    private boolean extendedSnippets = false;
 
     /**Item given as a reward by the target. */
     private Item reward;
 
 
     /** adds info about the Target.
-     * Format: name, locDesc, desc, snippet, location, reward
-     * For now, I will assume the icon and color will be the same.
-     * In the future, I may add a which icon represents the target.
+     * Format: name, locDesc, desc, snippet, location, reward, icon
+     * For now, I will assume color will be the same.
      * The reward will be a string, item object will have to be found from that.
      * @param info a string[] info to store.
      * @param everyItem a list of all items, in which to find reward.*/
-    public Target(final List<String> info, final List<Item> everyItem) {
+    Target(final List<String> info, final List<Item> everyItem, final int setIcon) {
         name = info.get(0);
         locationDescription = info.get(1);
         description = info.get(2);
         int num = 2 + 1; //getting around checkstyle, using num for indices 3, 4, and 5.
-        snippet = info.get(num);
+        sciName = info.get(num);
         location = getLatLng(info.get(++num));
         try {
             reward = findItemByName(info.get(++num), everyItem);
+            icon = setIcon;
         } catch (IllegalArgumentException ex) {
+
             System.out.println(info.get(num) + " was not found");
             System.out.println(everyItem);
             ex.printStackTrace();
@@ -96,13 +103,20 @@ public class Target {
     public void setMarker(final GoogleMap map, final Context context) {
         MarkerOptions options = new MarkerOptions();
         options.position(location).title(name);
-        if (snippet != null && !(snippet.equals(""))) {
-            options.snippet(snippet);
+        if (extendedSnippets) {
+            options.snippet(formatDescription());
+        } else {
+            options.snippet(sciName);
         }
         if (icon != 0) {
             options.icon(vectorToBitmap(icon, context));
         }
         targetMarker = map.addMarker(options);
+    }
+
+    /**Set up listeners for the marker, for info window. */
+    private void setUpListeners(final GoogleMap map) {
+        //has not been called yet, need to figure out how and where.
     }
 
     /** workaround function that converts a vector image to BitMapDescriptor.
@@ -125,6 +139,23 @@ public class Target {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    /**Toggles snippet between description and sciName. */
+    void toggleExtendedSnippet() {
+        extendedSnippets = !extendedSnippets;
+        if (targetMarker != null) {
+            if (targetMarker.getSnippet().equals(sciName)) {
+                targetMarker.setSnippet(formatDescription());
+            } else {
+                targetMarker.setSnippet(sciName);
+            }
+        }
+    }
+
+    /**@return whether or not snippets are extended. */
+    boolean hasExtendedSnippets() {
+        return extendedSnippets;
+    }
+
     /**@return the marker which represents the target. */
     public Marker getMarker() {
         return targetMarker;
@@ -143,6 +174,22 @@ public class Target {
     /**@return the description of the target - for info page. */
     public String getDescription() {
         return description;
+    }
+
+    /**@return the description formatted to fit a snippet. */
+    public String formatDescription() {
+        String[] wds = description.split(" ");
+        LinkedList<String> words = new LinkedList<>(Arrays.asList(wds));
+        StringBuilder output = new StringBuilder();
+        StringBuilder line;
+        for (int i = 0; i < (words.size() / descWordsPerLine) + 1; i++) {
+            line = new StringBuilder();
+            for (int j = 0; j < descWordsPerLine - 1 || !words.isEmpty(); j++) {
+                line.append(words.pop()).append(" ");
+            }
+            output.append(line.append("\n"));
+        }
+        return output.toString();
     }
 
     /**@param newName set a new name for the target. */

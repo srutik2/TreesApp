@@ -30,9 +30,10 @@ class OptionsAdapter extends ArrayAdapter {
 
     /**Ions for the different options. */
     private Map<String, Integer> icons = new HashMap<String, Integer>() { {
-        put("Settings", R.drawable.ic_gear);
         put("Music on", R.drawable.ic_music_on);
         put("Music off", R.drawable.ic_music_off);
+        put("Extended Snippets on", R.drawable.ic_message_plus);
+        put("Extended Snippets off", R.drawable.ic_message_minus);
     }};
 
     /**Sets up an Options Adapter.
@@ -92,7 +93,6 @@ class OptionsAdapter extends ArrayAdapter {
         option.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final CompoundButton cb, final boolean b) {
-                String text = "Turn " + name;
                 if (b) {
                     icon.setImageResource(icons.get(name + " on"));
                     switchOn(name, cb);
@@ -112,6 +112,8 @@ class OptionsAdapter extends ArrayAdapter {
     private boolean shouldCheck(final String name) {
         if (name.equals(options.get(0))) {
             return opMan.musicPlaying();
+        } else if (name.equals(options.get(1))) {
+            return opMan.hasExtendedSnippets();
         } else {
             return false;
         }
@@ -122,6 +124,8 @@ class OptionsAdapter extends ArrayAdapter {
     private void switchOn(final String name, final CompoundButton cb) {
         if (name.equals(options.get(0))) {
             opMan.startPlayer();
+        } else if (name.equals(options.get(1))) {
+            opMan.toggleExtendedSnippets();
         } else {
             System.out.println("Could not find option");
             Toast.makeText(context, "Could not toggle option", Toast.LENGTH_SHORT).show();
@@ -134,6 +138,8 @@ class OptionsAdapter extends ArrayAdapter {
     private void switchOff(final String name, final CompoundButton cb) {
         if (name.equals(options.get(0))) {
             opMan.stopPlayer();
+        } else if (name.equals(options.get(1))) {
+            opMan.toggleExtendedSnippets();
         } else {
             System.out.println("Could not find option");
             Toast.makeText(context, "Could not toggle option", Toast.LENGTH_SHORT).show();

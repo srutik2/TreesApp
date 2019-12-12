@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
      * and functionality in OptionsAdapter.*/
     private ArrayList<String> ops = new ArrayList<String>() { {
         add("Music");
+        add("Extended Snippets");
     }};
 
     /** ArrayList to store items in inventory. */
@@ -151,6 +152,20 @@ public class MainActivity extends AppCompatActivity
         return player != null;
     }
 
+    /**toggle what description the target's snippet shows. */
+    @Override
+    public void toggleExtendedSnippets() {
+        for (Target t : allTargets) {
+            t.toggleExtendedSnippet();
+        }
+    }
+
+    /**@return whether targets are using extended snippets. */
+    public boolean hasExtendedSnippets() {
+        Target ex = allTargets.get(0);
+        return ex.hasExtendedSnippets();
+    }
+
     /**When the player stops, end everything. */
     @Override
     protected void onStop() {
@@ -182,11 +197,11 @@ public class MainActivity extends AppCompatActivity
             while ((thisLine = br.readLine()) != null) {
                 List<String> splitLine = new ArrayList<>();
                 Collections.addAll(splitLine, thisLine.split("\\+_\\+"));
+                int icon = findIconByName(splitLine.remove(splitLine.size() - 1));
                 if (source.equals("targetData.txt")) {
-                    allTargets.add(new Target(splitLine, getAllItems()));
+                    allTargets.add(new Target(splitLine, getAllItems(), icon));
                 }
                 if (source.equals("itemInfo.txt")) {
-                    int icon = findIconByName(splitLine.remove(splitLine.size() - 1));
                     allItems.add(new Item(splitLine, icon));
                 }
             }
@@ -207,7 +222,6 @@ public class MainActivity extends AppCompatActivity
             System.out.println("alert! icon name not found!");
             return R.drawable.ic_alert;
         }
-        System.out.println("Icon id: " + resId);
         return resId;
     }
 
